@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Urbanist";
+  src: url("./assets/fonts/Urbanist-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Urbanist-semi";
+  src: url("./assets/fonts/Urbanist-SemiBold.ttf");
+}
+
+@layer base {
+  :root {
+    --color-primary: linear-gradient(#44bbfe, #1e78fe);
+    --color-secondary: linear-gradient(#ffcf53, #ff9900);
+    --color-tertiary: #f44545;
+    --color-income: #298bff;
+    --color-expenses: #ffaa1a;
+    --color-gray: #f7f7f7;
+    --color-tab-active: #0d1636;
+    --color-tab-inactive: #565c72;
+
+    --color-text-base: #0d1636;
+  }
+}
