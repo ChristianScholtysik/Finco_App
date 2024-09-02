@@ -7,8 +7,8 @@ import ButtonBlue from "../components/ButtonBlue";
 const SignUp = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [firstname, setFirstname] = useState<string>("");
-  const [lastname, setLastname] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [cardNumber, setCardNumber] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -37,8 +37,8 @@ const SignUp = () => {
       password,
       options: {
         data: {
-          first_name: firstname,
-          last_name: lastname,
+          first_name: firstName,
+          last_name: lastName,
           cardnumber: cardNumber,
         },
       },
@@ -109,6 +109,28 @@ const SignUp = () => {
               required
               className="w-full px-6 py-4 border border-border rounded-full text-tBase"
               placeholder="Confirm Password"
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              type="text"
+              id="firstname"
+              value={cardNumber}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+              className="w-full px-6 py-4 border border-border rounded-full text-tBase"
+              placeholder="First Name"
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              type="text"
+              id="lastname"
+              value={cardNumber}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+              className="w-full px-6 py-4 border border-border rounded-full text-tBase"
+              placeholder="Last Name"
             />
           </div>
           <div className="mb-4">
