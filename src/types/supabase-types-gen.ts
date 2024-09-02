@@ -9,27 +9,39 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      categories: {
+      account: {
         Row: {
+          amount: number
           created_at: string
           id: string
-          name: string
+          profile_id: string
         }
         Insert: {
+          amount: number
           created_at?: string
           id?: string
-          name: string
+          profile_id?: string
         }
         Update: {
+          amount?: number
           created_at?: string
           id?: string
-          name?: string
+          profile_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "account_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
           avatar_url: string | null
+          card_number: number
           created_at: string
           first_name: string
           id: string
@@ -37,6 +49,7 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
+          card_number: number
           created_at?: string
           first_name: string
           id?: string
@@ -44,6 +57,7 @@ export type Database = {
         }
         Update: {
           avatar_url?: string | null
+          card_number?: number
           created_at?: string
           first_name?: string
           id?: string
@@ -51,10 +65,51 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "profiles_id_fkey"
+            foreignKeyName: "profiles_id_fkey1"
             columns: ["id"]
             isOneToOne: true
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transactions: {
+        Row: {
+          account_id: string
+          amount: number
+          category: Database["public"]["Enums"]["category"]
+          created_at: string
+          id: string
+          income_expenses: Database["public"]["Enums"]["income/expenses"]
+          name: string
+          transaction_date: string
+        }
+        Insert: {
+          account_id?: string
+          amount: number
+          category: Database["public"]["Enums"]["category"]
+          created_at?: string
+          id?: string
+          income_expenses: Database["public"]["Enums"]["income/expenses"]
+          name: string
+          transaction_date: string
+        }
+        Update: {
+          account_id?: string
+          amount?: number
+          category?: Database["public"]["Enums"]["category"]
+          created_at?: string
+          id?: string
+          income_expenses?: Database["public"]["Enums"]["income/expenses"]
+          name?: string
+          transaction_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "account"
             referencedColumns: ["id"]
           },
         ]
@@ -67,7 +122,19 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      category:
+        | "Food & Drink"
+        | "Salary"
+        | "Insurance"
+        | "Clothing & Accessories"
+        | "Entertainment & Leisure"
+        | "Travel & Vacation"
+        | "Utilities (Electricity, Water, Gas)"
+        | "Rent/Mortgage"
+        | "Healthcare & Medical Expenses"
+        | "Dining Out & Takeaway"
+        | "Other"
+      "income/expenses": "income" | "expense"
     }
     CompositeTypes: {
       [_ in never]: never

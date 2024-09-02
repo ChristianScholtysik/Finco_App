@@ -28,6 +28,7 @@ export default {
         normal: 400,
       },
       fontSize: {
+        xs: "0.75rem",
         small: "0.9rem",
         base: "1rem",
         lg: "1.8rem",
