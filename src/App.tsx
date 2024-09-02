@@ -13,26 +13,26 @@ import { UserProvider } from "./context/UserContext";
 
 function App() {
   return (
-    // <UserProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        {/* <Route element={<PrivateRoute />}> */}
-        <Route path="/" element={<Home />} />
-        <Route path="/transaction" element={<Transaction />} />
-        <Route
-          path="/transaction-search-result"
-          element={<SearchResultPage />}
-        />
-        <Route path="/add-transaction-income" element={<Income />} />
-        <Route path="/add-transaction-expenses" element={<Expenses />} />
-        <Route path="/report" element={<Report />} />
-        <Route path="/myprofile" element={<MyProfile />} />
-        {/* </Route> */}
-      </Routes>
-    </BrowserRouter>
-    // </UserProvider>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          {/* <Route element={<PrivateRoute />}> */}
+          <Route path="/" element={<Home />} />
+          <Route path="/transaction" element={<Transaction />} />
+          <Route
+            path="/transaction-search-result"
+            element={<SearchResultPage />}
+          />
+          <Route path="/add-transaction-income" element={<Income />} />
+          <Route path="/add-transaction-expenses" element={<Expenses />} />
+          <Route path="/report" element={<Report />} />
+          <Route path="/myprofile" element={<MyProfile />} />
+          {/* </Route> */}
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 
