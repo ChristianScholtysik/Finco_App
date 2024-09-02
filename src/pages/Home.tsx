@@ -1,11 +1,7 @@
 import ButtonBlue from "../components/ButtonBlue";
 
 const Home = () => {
-  return (
-    <>
-      <ButtonBlue />
-    </>
-  );
+  return <></>;
 };
 
 export default Home;
