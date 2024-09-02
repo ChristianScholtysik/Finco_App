@@ -1,3 +1,4 @@
+import ButtonBlue from "../components/ButtonBlue";
 import Logo from "../components/Logo";
 import SearchIcon from "../components/SearchIcon";
 
