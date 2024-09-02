@@ -17,6 +17,7 @@ export default {
         expenses: "var(--color-expenses)",
         active: "var(--color-tab-active)",
         inactive: "var(--color-tab-inactive)",
+        border: "var(  --color-grayborder)",
       },
       fontFamily: {
         Urbanist: ["Urbanist", "sans-serif"],
@@ -24,6 +25,7 @@ export default {
       fontWeight: {
         semibold: 600,
         bold: 700,
+        normal: 400,
       },
       fontSize: {
         small: "0.9rem",
