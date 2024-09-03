@@ -1,37 +1,11 @@
-import React, { useEffect, useState } from "react";
-// import supabaseClient from "../lib/supabaseClient";
+import { useContext, useState } from "react";
+import { ProfileContext } from "../context/ProfileContext";
 
-interface CreditCardProps {
-  profileId: string;
-}
+// interface CreditCardProps {}
 
-const CreditCard: React.FC<CreditCardProps> = ({ profileId }) => {
-  const [cardNumber, setCardNumber] = useState<string | null>("1234");
-  const [cardHolderName, setCardHolderName] = useState<string | null>(
-    "John Doe"
-  );
-
-  // useEffect(() => {
-  //   const fetchProfileData = async () => {
-  //     const { data, error } = await supabaseClient
-  //       .from("profiles")
-  //       .select("card_number, first_name, last_name")
-  //       .eq("id", profileId)
-  //       .single();
-
-  //     if (error) {
-  //       console.error("Error fetching profile data:", error);
-  //     } else {
-  //       setCardNumber(
-  //         data?.card_number ? data.card_number.toString().slice(-4) : null
-  //       );
-
-  //       setCardHolderName(`${data?.first_name} ${data?.last_name}`);
-  //     }
-  //   };
-
-  //   fetchProfileData();
-  // }, [profileId]);
+// const CreditCard: React.FC<CreditCardProps> = ({}) => {
+const CreditCard = () => {
+  const profile = useContext(ProfileContext);
 
   return (
     <div className="w-80 h-48 rounded-2xl shadow-xl bg-gradient-to-r from-purple-500 to-blue-500 p-4 flex flex-col justify-between text-white">
@@ -43,8 +17,7 @@ const CreditCard: React.FC<CreditCardProps> = ({ profileId }) => {
             className="h-3 w-3 text-white"
             fill="none"
             viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
+            stroke="currentColor">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -54,13 +27,16 @@ const CreditCard: React.FC<CreditCardProps> = ({ profileId }) => {
           </svg>
         </span>
       </header>
-
+      <div className="flex">
+        <p className="font-Urbanist text-sm ml-2 ">
+          {profile?.profile?.first_name}
+        </p>
+        <p className="font-Urbanist text-sm ml-2 ">
+          {profile?.profile?.last_name}
+        </p>
+      </div>
       <p className="font-Urbanist text-sm ml-2">
-        {cardHolderName ? cardHolderName : "Loading..."}
-      </p>
-
-      <p className="font-Urbanist text-sm ml-2">
-        {cardNumber ? `**** ${cardNumber}` : "**** ****"}
+        **** **** **** {profile?.profile?.card_number.toString().slice(-4)}
       </p>
 
       <div className="flex justify-between items-center">
