@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import Navbar from "../components/Navbar";
 import supabaseClient from "../lib/supabaseClient";
@@ -20,14 +20,18 @@ const Home = () => {
     const fetchProfileData = async () => {
       const profileResponse = await supabaseClient
         .from("profiles")
-        .select("card_number, first_name, last_name")
+        .select("card_number, first_name, last_name, avatar_url, created_at")
         .eq("id", user?.id)
         .single();
 
       if (profileResponse.error) {
         console.error("Error fetching profile data:", profileResponse.error);
       } else {
-        setProfile(profileResponse.data);
+        setProfile({
+          ...profileResponse.data,
+          id: user?.id || "",
+          avatar_url: null,
+        });
       }
     };
     if (user) {
