@@ -2,6 +2,7 @@ import { useState } from "react";
 import ButtonBlue from "../components/ButtonBlue";
 import supabaseClient from "../lib/supabaseClient";
 import { TablesInsert } from "../types/supabase-types-gen";
+import CreditCard from "../components/CreditCard";
 
 const Income = () => {
   const [amount, setAmount] = useState<number | undefined>(undefined);
@@ -55,17 +56,19 @@ const Income = () => {
   };
 
   return (
-    <section className="flex items-center justify-center h-screen">
+    <section className="flex items-center justify-center ">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
         <div className="mb-6">
           <button
             onClick={() => window.history.back()}
-            className="text-black hover:text-gray font-medium"
-          >
+            className="text-black hover:text-gray font-medium">
             &larr;
           </button>
         </div>
         <h1 className="text-2xl text-income font-bold mb-6">Add Income</h1>
+        <div className="mb-4 ">
+          <CreditCard />
+        </div>
 
         <form onSubmit={addIncome}>
           {/* Amount */}
@@ -90,8 +93,7 @@ const Income = () => {
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
               required
-              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray"
-            >
+              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray">
               <option value="">Categories</option>
               <option value="Food & Drink">Food & Drink</option>
               <option value="Salary">Salary</option>
