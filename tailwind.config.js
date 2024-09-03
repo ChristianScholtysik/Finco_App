@@ -30,8 +30,8 @@ export default {
       fontSize: {
         xs: "0.75rem",
         small: "0.9rem",
-        base: "1rem",
-        lg: "1.8rem",
+        base: "1.1rem",
+        lg: "1.3rem",
         xl: "2rem",
         xlarge: "1.7rem",
         xxl: "2.2rem",
