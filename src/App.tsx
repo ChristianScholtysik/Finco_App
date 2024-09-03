@@ -12,6 +12,7 @@ import MyProfile from "./pages/MyProfile";
 import { UserProvider } from "./context/UserContext";
 import PrivateRoute from "./lib/PrivateRoute";
 import { ProfileProvider } from "./context/ProfileContext";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                   />
                   <Route path="/report" element={<Report />} />
                   <Route path="/myprofile" element={<MyProfile />} />
+                  <Route path="/profile" element={<Profile />} />
                 </Route>
               </Routes>
             </main>

@@ -5,6 +5,7 @@ import { TablesInsert } from "../types/supabase-types-gen";
 import CreditCard from "../components/CreditCard";
 
 const Income = () => {
+  const [name, setName] = useState<string>("");
   const [amount, setAmount] = useState<number | undefined>(undefined);
   const [categoryFilter, setCategoryFilter] = useState<string>("");
   const [date, setDate] = useState<string>("");
@@ -66,11 +67,23 @@ const Income = () => {
           </button>
         </div>
         <h1 className="text-2xl text-income font-bold mb-6">Add Income</h1>
-        <div className="mb-4 ">
+        {/* <div className="mb-4 ">
           <CreditCard />
-        </div>
+        </div> */}
 
         <form onSubmit={addIncome}>
+          {/* Name */}
+          <p className="mb-2 font-normal text-sm text-tBase">Name</p>
+          <div className="mb-4">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray"
+              placeholder="Name"
+            />
+          </div>
           {/* Amount */}
           <p className="mb-2 font-normal text-sm text-tBase">Amount</p>
           <div className="mb-4">

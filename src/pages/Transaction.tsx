@@ -7,6 +7,7 @@ import Logo from "../components/Logo";
 import { Transactions } from "../types/supabase-types.own";
 import { useEffect, useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
+import { useProfileData } from "../context/ProfileContext";
 
 const Transaction = () => {
   const categoryIcons = {
@@ -27,6 +28,7 @@ const Transaction = () => {
   const [groupedTransactions, setGroupedTransactions] = useState<{
     [date: string]: Transactions[];
   }>({});
+  const { profile, setProfile } = useProfileData();
 
   useEffect(() => {
     const fetchAllTransactions = async () => {
@@ -77,11 +79,17 @@ const Transaction = () => {
       <section className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
         <div className="flex justify-between items-center mb-10 w-full">
           <Logo />
-          <img
-            className="inline-block h-10 w-10 rounded-full ring-2 ring-white"
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-            alt=""
-          />
+          {profile?.avatar_url ? (
+            <img
+              alt="User Avatar"
+              src={profile.avatar_url}
+              className="inline-block h-16 w-16 rounded-full ring-2 ring-white cursor-pointer object-cover object-center"
+            />
+          ) : (
+            <div className="inline-block h-16 w-16 rounded-full bg-gray-300 flex items-center justify-center">
+              No image
+            </div>
+          )}
         </div>
         <div className="flex justify-between items-center gap-16 mb-8 w-full max-w-sm">
           <h1 className="font-bold text-2xl">All Transactions</h1>
