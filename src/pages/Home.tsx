@@ -7,10 +7,6 @@ import { useProfileData } from "../context/ProfileContext";
 import CreditCard from "../components/CreditCard";
 
 const Home = () => {
-  // const [cardNumber, setCardNumber] = useState<string | null>("");
-
-  // const [cardHolderName, setCardHolderName] = useState<string | null>("");
-
   const { profile, setProfile } = useProfileData();
 
   const userContext = useUserContext();
