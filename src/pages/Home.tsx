@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import supabaseClient from "../lib/supabaseClient";
 import { useUserContext } from "../context/UserContext";
@@ -23,7 +23,7 @@ const Home: React.FC = () => {
     return null;
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchProfileData = async () => {
       const profileResponse = await supabaseClient
         .from("profiles")

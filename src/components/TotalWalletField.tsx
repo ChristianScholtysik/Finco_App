@@ -1,4 +1,3 @@
-import React from "react";
 import { FaEuroSign } from "react-icons/fa";
 import { MdExpandMore } from "react-icons/md";
 

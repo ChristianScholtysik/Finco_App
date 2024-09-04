@@ -1,9 +1,6 @@
 import { useContext, useState } from "react";
 import { ProfileContext } from "../context/ProfileContext";
 
-// interface CreditCardProps {}
-
-// const CreditCard: React.FC<CreditCardProps> = ({}) => {
 const CreditCard = () => {
   const profile = useContext(ProfileContext);
 
