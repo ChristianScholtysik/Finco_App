@@ -36,6 +36,7 @@
   :root {
     --color-primary: linear-gradient(#44bbfe, #1e78fe);
     --color-secondary: linear-gradient(#ffcf53, #ff9900);
+    --color-gradientgreen: linear-gradient(red, green);
     --color-tertiary: #f44545;
     --color-income: #298bff;
     --color-expenses: #ffaa1a;
