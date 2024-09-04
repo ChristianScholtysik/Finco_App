@@ -50,7 +50,9 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div className="flex items-center justify-center flex-col">
+    <div
+      className="flex items-center justify-center flex-col h-full
+    ">
       <section className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -83,8 +85,7 @@ const Home: React.FC = () => {
             showDetails
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
-          } flex gap-5 mt-6`}
-        >
+          } flex gap-5 mt-6`}>
           <IncomeFieldXL />
           <ExpenseFieldXL />
         </div>

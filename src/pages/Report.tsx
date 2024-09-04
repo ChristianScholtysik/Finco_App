@@ -50,7 +50,7 @@ const Report: React.FC = () => {
 
       const { data: transactions, error } = await supabaseClient
         .from("transactions")
-        .select("category, amount")
+        .select("*")
         .eq("account_id", accountId) // Verwende die account_id aus dem Profil
         .gte("transaction_date", new Date().toISOString().slice(0, 7) + "-01") // Beginn des aktuellen Monats
         .lt("transaction_date", new Date().toISOString().slice(0, 7) + "-30"); // Ende des aktuellen Monats

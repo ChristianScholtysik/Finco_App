@@ -31,3 +31,5 @@ export const ProfileProvider = ({
     </ProfileContext.Provider>
   );
 };
+
+export const useUserContext = () => useContext(ProfileContext);

@@ -11,7 +11,7 @@ const ExpenseField: React.FC<ExpenseFieldProps> = ({ text }) => {
         <ButtonExpense />
         <div className="flex flex-col justify-end">
           <p className=" text-small">Expenses</p>
-          <p className=" text-xs font-semibold">-{text}</p>
+          <p className=" text-xs font-semibold"> {text}</p>
         </div>
       </div>
     </section>
