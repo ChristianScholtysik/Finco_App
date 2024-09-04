@@ -3,6 +3,8 @@ import ButtonBlue from "../components/ButtonBlue";
 import supabaseClient from "../lib/supabaseClient";
 import { TablesInsert } from "../types/supabase-types-gen";
 import CreditCard from "../components/CreditCard";
+import { useUserContext } from "../context/UserContext";
+import { useProfileData } from "../context/ProfileContext";
 
 const Income = () => {
   const [name, setName] = useState<string>("");
@@ -11,6 +13,9 @@ const Income = () => {
   const [date, setDate] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  // const { profile, setProfile } = useProfileData();
+  //TODO: evtl muss man account fetchen um dann den daten die passende account id mitzugeben => sobald account_id in transactions nämlich nullable ist, funktioniert der insert!!!
 
   const addIncome = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +35,7 @@ const Income = () => {
         category: categoryFilter as TablesInsert<"transactions">["category"],
         transaction_date: date,
         income_expenses: "income",
+        // account_id:profile?.id
       };
 
       // Insert Befehl an Supabase
