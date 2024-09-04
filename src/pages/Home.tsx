@@ -54,11 +54,17 @@ const Home = () => {
             </p>
           </div>
 
-          <img
-            className="inline-block h-10 w-10 rounded-full ring-2 ring-white"
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-            alt="Profile"
-          />
+          {profile?.avatar_url ? (
+            <img
+              alt="User Avatar"
+              src={profile.avatar_url}
+              className="inline-block h-14 w-14 rounded-full ring-2 ring-white cursor-pointer object-cover object-center"
+            />
+          ) : (
+            <div className="inline-block h-14 w-14 rounded-full bg-gray-300 flex items-center justify-center">
+              No image
+            </div>
+          )}
         </div>
 
         <CreditCard />

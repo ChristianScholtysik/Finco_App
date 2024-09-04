@@ -83,10 +83,10 @@ const Transaction = () => {
             <img
               alt="User Avatar"
               src={profile.avatar_url}
-              className="inline-block h-16 w-16 rounded-full ring-2 ring-white cursor-pointer object-cover object-center"
+              className="inline-block h-14 w-14 rounded-full ring-2 ring-white cursor-pointer object-cover object-center"
             />
           ) : (
-            <div className="inline-block h-16 w-16 rounded-full bg-gray-300 flex items-center justify-center">
+            <div className="inline-block h-14 w-14 rounded-full bg-gray-300 flex items-center justify-center">
               No image
             </div>
           )}
