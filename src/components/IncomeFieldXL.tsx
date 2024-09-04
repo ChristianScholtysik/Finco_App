@@ -3,7 +3,7 @@ import ButtonIncome from "./ButtonIncome";
 const IncomeFieldXL = () => {
   return (
     <section>
-      <div className="flex flex-col items-center bg-gray rounded-lg py-9 px-8 gap-4">
+      <div className="flex flex-col items-center bg-gray rounded-lg py-4 px-4 gap-4">
         <ButtonIncome />
 
         <div className="flex flex-col items-center">

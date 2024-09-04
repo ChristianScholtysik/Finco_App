@@ -8,7 +8,7 @@ const CreditCard = () => {
   const profile = useContext(ProfileContext);
 
   return (
-    <div className="w-80 h-48 rounded-2xl shadow-xl bg-gradient-to-r from-purple-500 to-blue-500 p-4 flex flex-col justify-between text-white">
+    <div className="w-81 h-48 rounded-2xl shadow-xl bg-gradient-to-r from-purple-500 to-blue-500 p-4 flex flex-col justify-between text-white">
       <header className="flex justify-between items-center text-sm font-Urbanist">
         <img src="public/mastercard.svg" alt="Card Icon" className="w-8 h-8" />
         <span className="bg-yellow-400 w-5 h-5 rounded-full flex items-center justify-center">

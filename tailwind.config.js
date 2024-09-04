@@ -47,6 +47,13 @@ export default {
         xl: "1280px",
         "2xl": "1536px",
       },
+
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(to right, #6ee7b7, #a4c2f4)',
+        'another-gradient': 'linear-gradient(to bottom, #6ee7b7, #a4c2f4)',
+        
+      },
     },
   },
 };
+

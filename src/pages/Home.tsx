@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import supabaseClient from "../lib/supabaseClient";
 import { useUserContext } from "../context/UserContext";
@@ -6,18 +6,24 @@ import { useProfileData } from "../context/ProfileContext";
 import CreditCard from "../components/CreditCard";
 import ExpenseFieldXL from "../components/ExpenseFieldXL";
 import IncomeFieldXL from "../components/IncomeFieldXL";
+import TotalWalletField from "../components/TotalWalletField";
 
-const Home = () => {
+const Home: React.FC = () => {
   const { profile, setProfile } = useProfileData();
-
   const userContext = useUserContext();
   const user = userContext?.user;
+
+  const [showDetails, setShowDetails] = useState(false);
+
+  const toggleDetails = () => {
+    setShowDetails(!showDetails);
+  };
 
   if (!user) {
     return null;
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchProfileData = async () => {
       const profileResponse = await supabaseClient
         .from("profiles")
@@ -44,7 +50,7 @@ const Home = () => {
   }
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center flex-col">
       <section className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -68,12 +74,22 @@ const Home = () => {
         </div>
 
         <CreditCard />
-        <p className="font-Urbanist text-lg mb-6 mt-7">Total wallet</p>
-        <div className="flex gap-5 mb-10">
+        <p className="font-Urbanist text-lg mb-3 mt-7">Total wallet</p>
+
+        <TotalWalletField onToggle={toggleDetails} />
+
+        <div
+          className={`transition-transform duration-200 ease-out transform ${
+            showDetails
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-10 opacity-0"
+          } flex gap-5 mt-6`}
+        >
           <IncomeFieldXL />
           <ExpenseFieldXL />
         </div>
       </section>
+
       <Navbar />
     </div>
   );
