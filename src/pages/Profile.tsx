@@ -8,6 +8,7 @@ import { useUserContext } from "../context/UserContext";
 import { useEffect, useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
 import { IoMdPerson } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { profile, setProfile } = useProfileData();
@@ -19,6 +20,7 @@ const Profile = () => {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
 
+  const navigate = useNavigate();
   if (!user) {
     return;
   }
@@ -130,9 +132,26 @@ const Profile = () => {
     return <p>Loading...</p>;
   }
 
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const signoutResponse = await supabaseClient.auth.signOut();
+
+    if (!user) {
+      return;
+    }
+
+    if (signoutResponse.error) {
+      console.log("Logout error", signoutResponse.error);
+    } else {
+      userContext?.setUser(null);
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="flex items-center justify-center ">
-      <section className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+      <section className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm ">
         <div className="flex justify-between items-center mb-10 w-full">
           <Logo />
           {avatarUrl ? (
@@ -162,7 +181,6 @@ const Profile = () => {
             <MdArrowForwardIos />
           </div>
         </button>
-
         <button className="bg-stone-200 text-tBase text-small font-base rounded-lg shadow-lg px-4 py-4 w-full flex justify-between items-center mb-4">
           <div className="flex items-center gap-2">
             <IoMdPerson />
@@ -179,11 +197,13 @@ const Profile = () => {
             <MdArrowForwardIos />
           </div>
         </button>
+
+        {/* //*Image Upload */}
         <div className="flex flex-col items-center mb-6">
           {avatarUrl ? (
             <img
               src={avatarUrl}
-              className="w-12 h-12 rounded-full object-cover border-4 border-white shadow-md"
+              className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-md"
             />
           ) : (
             <div className="w-32 h-32 rounded-full bg-gray-300 flex items-center justify-center">
@@ -209,8 +229,8 @@ const Profile = () => {
               disabled={uploading}
               className={`w-40 px-4 py-2 text-white font-semibold rounded-md transition-colors mt-2 ${
                 uploading
-                  ? "bg-income cursor-not-allowed"
-                  : "bg-income hover:bg-sky-900"
+                  ? "bg-gradient-to-b from-[#44bbfe] to-[#1e78fe]  cursor-not-allowed"
+                  : "bg-gradient-to-b from-[#44bbfe] to-[#1e78fe] :bg-sky-900"
               }`}>
               {uploading ? "Uploading..." : "Upload"}
             </button>
@@ -219,22 +239,21 @@ const Profile = () => {
               disabled={uploading}
               className={`w-40 px-4 py-2 text-white font-semibold rounded-md transition-colors mt-2 ${
                 uploading
-                  ? "bg-expenses cursor-not-allowed"
-                  : "bg-expenses hover:bg-red-900"
+                  ? "bg-gradient-to-b from-[#FFCF53] to-[#FF9900]  cursor-not-allowed"
+                  : "bg-gradient-to-b from-[#FFCF53] to-[#FF9900] :bg-red-900"
               }`}>
               {uploading ? "Deleting..." : "Delete"}
             </button>
           </section>
         </div>
-
-        <button className="bg-stone-200 text-tBase text-small font-base rounded-lg shadow-lg px-4 py-4 w-full flex justify-between items-center mb-4">
+        <button
+          className="bg-stone-200 text-tBase text-small font-base rounded-lg shadow-lg px-4 py-4 w-full flex justify-between items-center mb-4"
+          onClick={handleLogout}>
           <div className="flex items-center gap-2">
             <LuLogOut />
             <span>Logout</span>
           </div>
-          <div>
-            <MdArrowForwardIos />
-          </div>
+          <MdArrowForwardIos />
         </button>
       </section>
       <Navbar />
