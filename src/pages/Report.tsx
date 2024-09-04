@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import supabaseClient from "../lib/supabaseClient";
 import { useProfileData } from "../context/ProfileContext";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
@@ -32,12 +33,40 @@ const Report: React.FC = () => {
 
       console.log("Profile found:", profile);
 
+      const accountResponse = await supabaseClient
+        .from("account")
+        .select("id")
+        .eq("profile_id", profile.id)
+        .single();
+
+      if (!accountResponse) {
+        return "no Account found";
+      }
+      const accountId = accountResponse.data?.id;
+
+      if (!accountId) {
+        return "no Account found";
+      }
+
       const { data: transactions, error } = await supabaseClient
         .from("transactions")
         .select("category, amount")
-        .eq("account_id", profile.id) // Verwende die account_id aus dem Profil
+        .eq("account_id", accountId) // Verwende die account_id aus dem Profil
         .gte("transaction_date", new Date().toISOString().slice(0, 7) + "-01") // Beginn des aktuellen Monats
-        .lt("transaction_date", new Date().toISOString().slice(0, 7) + "-31"); // Ende des aktuellen Monats
+        .lt("transaction_date", new Date().toISOString().slice(0, 7) + "-30"); // Ende des aktuellen Monats
+      console.log(new Date().toISOString().slice(0, 7) + "-30");
+
+      const now = new Date();
+
+      // Berechnung des ersten Tages des letzten Monats
+      const startOfLastMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        1
+      );
+
+      // Berechnung des letzten Tages des letzten Monats
+      const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
 
       if (error) {
         console.log("Error fetching transactions:", error);

@@ -4,6 +4,7 @@ import { Profile } from "../types/supabase-types.own";
 interface IProfileContext {
   profile: Profile | null;
   setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
+  loading: boolean;
 }
 
 export const ProfileContext = createContext<IProfileContext | null>(null);
@@ -22,9 +23,10 @@ export const ProfileProvider = ({
   children: React.ReactNode;
 }) => {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   return (
-    <ProfileContext.Provider value={{ profile, setProfile }}>
+    <ProfileContext.Provider value={{ profile, setProfile, loading }}>
       {children}
     </ProfileContext.Provider>
   );
