@@ -1,17 +1,55 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ButtonBlue from "../components/ButtonBlue";
 import supabaseClient from "../lib/supabaseClient";
 import { TablesInsert } from "../types/supabase-types-gen";
+import { useUserContext } from "../context/UserContext";
 
 const Expenses = () => {
+  const userContext = useUserContext();
+  const user = userContext?.user;
+
+  if (!userContext) {
+    throw new Error("useUserContext must be used within a UserProvider");
+  }
+
+  const [name, setName] = useState<string>("");
   const [amount, setAmount] = useState<number | undefined>(undefined);
   const [categoryFilter, setCategoryFilter] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [accountId, setAccountId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAccountID = async () => {
+      if (user) {
+        const { data, error } = await supabaseClient
+          .from("account")
+          .select("id")
+          .eq("profile_id", user.id)
+          .single();
+
+        if (error) {
+          console.log("Error fetching account ID:", error);
+          setErrorMessage("Failed to fetch account Id.");
+          return;
+        }
+
+        if (data) {
+          setAccountId(data.id);
+        }
+      }
+    };
+    fetchAccountID();
+  }, [user]);
 
   const addExpense = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!accountId) {
+      setErrorMessage("Account ID is not set. Please wait and try again.");
+      return;
+    }
 
     if (!amount || !categoryFilter || !date) {
       setErrorMessage("Please fill out all fields.");
@@ -19,18 +57,17 @@ const Expenses = () => {
     }
 
     try {
-      const formattedAmount = parseFloat(amount.toFixed(2)) * -1; // Betrag als negativ formatieren
+      const formattedAmount = parseFloat(amount.toFixed(2)) * -1;
 
-      // Objekt kreieren
       const expenseData: TablesInsert<"transactions"> = {
-        name: "Expense",
+        name: name,
         amount: formattedAmount,
         category: categoryFilter as TablesInsert<"transactions">["category"],
         transaction_date: date,
         income_expenses: "expense",
+        account_id: accountId,
       };
 
-      // Insert Befehl an Supabase
       const { data, error } = await supabaseClient
         .from("transactions")
         .insert([expenseData]);
@@ -41,9 +78,9 @@ const Expenses = () => {
         return;
       }
 
-      // Danach wieder alles leeren
       setSuccessMessage("Expense added successfully!");
       setErrorMessage("");
+      setName("");
       setAmount(undefined);
       setCategoryFilter("");
       setDate("");
@@ -55,8 +92,8 @@ const Expenses = () => {
   };
 
   return (
-    <section className="flex items-center justify-center h-screen">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+    <section className="flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg w-full max-w-sm">
         <div className="mb-6">
           <button
             onClick={() => window.history.back()}
@@ -65,9 +102,22 @@ const Expenses = () => {
             &larr;
           </button>
         </div>
-        <h1 className="text-2xl text-orange-600 font-bold mb-6">Add Expense</h1>
+        <h1 className="text-2xl text-red-600 font-bold mb-6">Add Expense</h1>
 
         <form onSubmit={addExpense}>
+          {/* Name */}
+          <p className="mb-2 font-normal text-sm text-tBase">Name</p>
+          <div className="mb-4">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray"
+              placeholder="Name"
+            />
+          </div>
+
           {/* Amount */}
           <p className="mb-2 font-normal text-sm text-tBase">Amount</p>
           <div className="mb-4">
