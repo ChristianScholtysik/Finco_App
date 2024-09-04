@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonBlue from "../components/ButtonBlue";
 import supabaseClient from "../lib/supabaseClient";
 import { TablesInsert } from "../types/supabase-types-gen";
@@ -7,18 +7,55 @@ import { useUserContext } from "../context/UserContext";
 import { useProfileData } from "../context/ProfileContext";
 
 const Income = () => {
+  // Verbindung zum Context
+  const userContext = useUserContext();
+  // hole mir hier den User
+  const user = userContext?.user;
+
+  if (!userContext) {
+    throw new Error("useUserContext must be used within a UserProvider");
+  }
+
   const [name, setName] = useState<string>("");
   const [amount, setAmount] = useState<number | undefined>(undefined);
   const [categoryFilter, setCategoryFilter] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [accountId, setAccountId] = useState<string | null>(null);
 
-  // const { profile, setProfile } = useProfileData();
-  //TODO: evtl muss man account fetchen um dann den daten die passende account id mitzugeben => sobald account_id in transactions nämlich nullable ist, funktioniert der insert!!!
+  useEffect(() => {
+    const fetchAccountID = async () => {
+      if (user) {
+        // Nutzer angemeldet?
+        console.log("User:", user);
+        const { data, error } = await supabaseClient
+          .from("account")
+          .select("id") // Spalte auswählen
+          .eq("profile_id", user.id) // Zeile filtern wo profile id = user id
+          .single();
+
+        if (error) {
+          console.log("Error fetching account ID:", error);
+          setErrorMessage("Failed to fetch account Id.");
+          return;
+        }
+
+        if (data) {
+          setAccountId(data.id);
+        }
+      }
+    };
+    fetchAccountID();
+  }, [user]);
 
   const addIncome = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!accountId) {
+      setErrorMessage("Account ID is not set. Please wait and try again.");
+      return;
+    }
 
     if (!amount || !categoryFilter || !date) {
       setErrorMessage("Please fill out all fields.");
@@ -30,18 +67,21 @@ const Income = () => {
 
       // Objekt kreieren
       const incomeData: TablesInsert<"transactions"> = {
-        name: "Income",
+        name: name,
         amount: formattedAmount,
         category: categoryFilter as TablesInsert<"transactions">["category"],
         transaction_date: date,
         income_expenses: "income",
-        // account_id:profile?.id
+        account_id: accountId,
       };
 
       // Insert Befehl an Supabase
       const { data, error } = await supabaseClient
         .from("transactions")
         .insert([incomeData]);
+
+      console.log(incomeData);
+      console.log("Income added successfully to transaction table.");
 
       if (error) {
         console.error("Error inserting data:", error);
@@ -50,6 +90,7 @@ const Income = () => {
       }
 
       // Danach wieder alles leeren
+      setName("");
       setSuccessMessage("Income added successfully!");
       setErrorMessage("");
       setAmount(undefined);
@@ -64,11 +105,12 @@ const Income = () => {
 
   return (
     <section className="flex items-center justify-center ">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+      <div className="bg-white p-8 rounded-lg w-full max-w-sm">
         <div className="mb-6">
           <button
             onClick={() => window.history.back()}
-            className="text-black hover:text-gray font-medium">
+            className="text-black hover:text-gray font-medium"
+          >
             &larr;
           </button>
         </div>
@@ -112,7 +154,8 @@ const Income = () => {
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
               required
-              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray">
+              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray"
+            >
               <option value="">Categories</option>
               <option value="Food & Drink">Food & Drink</option>
               <option value="Salary">Salary</option>
