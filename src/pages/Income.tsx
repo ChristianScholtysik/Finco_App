@@ -75,7 +75,8 @@ const Income = () => {
       };
 
       // Insert Befehl an Supabase
-      const { data, error } = await supabaseClient
+      // const { data, error } = await supabaseClient
+      const { error } = await supabaseClient
         .from("transactions")
         .insert([incomeData]);
 

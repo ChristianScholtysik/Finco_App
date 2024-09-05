@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Navbar from "../components/Navbar";
-import supabaseClient from "../lib/supabaseClient";
+
 import { useUserContext } from "../context/UserContext";
 
 import CreditCard from "../components/CreditCard";
 import ExpenseFieldXL from "../components/ExpenseFieldXL";
 import IncomeFieldXL from "../components/IncomeFieldXL";
 import TotalWalletField from "../components/TotalWalletField";
+import { useTransactionContext } from "../context/TotalIncomeContext";
 
 
 const Home: React.FC = () => {
@@ -14,7 +15,10 @@ const Home: React.FC = () => {
   const userContext = useUserContext();
   const user = userContext?.user;
 
-
+  
+  const incomeExpenses=  useTransactionContext()
+  const incomeFieldText = incomeExpenses.totalIncome?.toFixed(2) ?? "0.00";
+  const expenseFieldText = incomeExpenses.totalExpenses?.toFixed(2) ?? "0.00";
 
   const [showDetails, setShowDetails] = useState(false);
 
@@ -59,6 +63,8 @@ const Home: React.FC = () => {
     return <p>Loading...</p>;
   }
 
+ 
+
   return (
     <div
       className="flex items-center justify-center flex-col h-full
@@ -96,8 +102,8 @@ const Home: React.FC = () => {
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
           } flex gap-5 mt-6`}>
-          <IncomeFieldXL />
-          <ExpenseFieldXL />
+          <IncomeFieldXL text={incomeFieldText} />
+          <ExpenseFieldXL text={expenseFieldText}/>
         </div>
       </section>
 

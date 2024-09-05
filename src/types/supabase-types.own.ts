@@ -19,3 +19,18 @@ export interface IAccount {
   created_at: string;
   profile_id: string;
 }
+
+export interface ITransaction {
+  id: string;
+  name: string;
+  amount: number;
+  category: string;
+  transaction_date: string;
+  created_at: string;
+  income_expenses: IncomeExpenses;
+  account_id: string;
+}
+export enum IncomeExpenses {
+  INCOME = "income",
+  EXPENSE = "expense",
+}
