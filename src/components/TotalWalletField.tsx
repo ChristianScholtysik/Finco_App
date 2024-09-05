@@ -1,24 +1,30 @@
 import { MdExpandMore } from "react-icons/md";
+import { useUserContext } from "../context/UserContext";
 
 interface TotalWalletFieldProps {
   onToggle: () => void;
 }
 
-const balance = -2000; // TODO: balance dynamisch machen
-
 const TotalWalletField: React.FC<TotalWalletFieldProps> = ({ onToggle }) => {
+  const userContext = useUserContext();
   const currentDate: string = new Date().toLocaleDateString("de-DE", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   });
 
+  const balance = userContext.account?.amount;
+  console.log(balance);
+
+  if (!balance) {
+    return;
+  }
+
   return (
     <section
       className={`w-full max-w-lg ${
         balance >= 0 ? "bg-custom-gradient" : "bg-another-gradient"
-      } text-white rounded-lg shadow-md py-4 px-10 relative`}
-    >
+      } text-white rounded-lg shadow-md py-4 px-10 relative`}>
       <div className="absolute top-4 right-3 text-sm text-gray-700">
         {currentDate}
       </div>
@@ -38,8 +44,7 @@ const TotalWalletField: React.FC<TotalWalletFieldProps> = ({ onToggle }) => {
 
       <div
         onClick={onToggle}
-        className="flex items-center cursor-pointer absolute bottom-1 right-2"
-      >
+        className="flex items-center cursor-pointer absolute bottom-1 right-2">
         <MdExpandMore className="text-xl mr-1" />
         <span>Details</span>
       </div>
