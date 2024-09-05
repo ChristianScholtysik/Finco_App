@@ -3,6 +3,7 @@ import ButtonBlue from "../components/ButtonBlue";
 import supabaseClient from "../lib/supabaseClient";
 import { TablesInsert } from "../types/supabase-types-gen";
 import { useUserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Expenses = () => {
   const userContext = useUserContext();
@@ -19,6 +20,7 @@ const Expenses = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [accountId, setAccountId] = useState<string | null>(null);
+  const navigate = useNavigate();  
 
   useEffect(() => {
     const fetchAccountID = async () => {
@@ -129,7 +131,7 @@ return;
       <div className="bg-white p-8 rounded-lg w-full max-w-sm">
         <div className="mb-6">
           <button
-            onClick={() => window.history.back()}
+           onClick={() => navigate(-1)}
             className="text-black hover:text-gray font-medium">
             &larr;
           </button>
