@@ -2,7 +2,7 @@ import ExpenseField from "../components/ExpenseField";
 import IncomeField from "../components/IncomeField";
 import Navbar from "../components/Navbar";
 import SearchIcon from "../components/SearchIcon";
-
+import categoryIcons from "../assets/categoryIcons";
 import Logo from "../components/Logo";
 import { Transactions } from "../types/supabase-types.own";
 import { useEffect, useState } from "react";
@@ -10,19 +10,6 @@ import supabaseClient from "../lib/supabaseClient";
 import { useProfileContext } from "../context/ProfileContext";
 
 const Transaction = () => {
-  const categoryIcons = {
-    "Food & Drink": "🍕",
-    Salary: "💵",
-    Insurance: "🧯",
-    "Clothing & Accessories": "👚",
-    "Entertainment & Leisure": "🎮",
-    "Travel & Vacation": "🏖️",
-    "Utilities (Electricity, Water, Gas)": "🪫",
-    "Rent/Mortgage": "🏠",
-    "Healthcare & Medical Expenses": "⛑️",
-    "Dining Out & Takeaway": "🥂",
-    Other: "🦄",
-  };
 
   const [transactions, setTransactions] = useState<Transactions[]>([]);
   const [groupedTransactions, setGroupedTransactions] = useState<{
