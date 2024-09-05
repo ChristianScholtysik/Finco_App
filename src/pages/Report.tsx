@@ -19,8 +19,9 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import Navbar from "../components/Navbar";
 import Logo from "../components/Logo";
+import { useUserContext } from "../context/UserContext";
 
-import { useProfileContext } from "../context/ProfileContext";
+
 
 
 
@@ -40,6 +41,7 @@ ChartJS.register(
 );
 
 const Report: React.FC = () => {
+  const userContext = useUserContext();
 
   const [data, setData] = useState<{
     labels: string[];
@@ -53,7 +55,7 @@ const Report: React.FC = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  const { profile } = useProfileContext();
+
   const [isWeeklyOpen, setIsWeeklyOpen] = useState(true);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
@@ -68,7 +70,7 @@ const Report: React.FC = () => {
 
   useEffect(() => {
     const fetchMonthlyExpensesByCategory = async () => {
-      if (!profile) {
+      if (!userContext.profile) {
 
         setLoading(false);
         return;
@@ -257,10 +259,10 @@ const Report: React.FC = () => {
       <div className="h-100 bg-white p-6 rounded-lg w-full max-w-sm">
         <div className="flex justify-between items-center mb-10 w-full h-10">
           <Logo />
-          {profile?.avatar_url ? (
+          {userContext.profile?.avatar_url ? (
             <img
               alt="User Avatar"
-              src={profile.avatar_url}
+              src={userContext.profile.avatar_url}
               className="inline-block h-14 w-14 rounded-full ring-2 ring-white cursor-pointer object-cover object-center"
             />
           ) : (

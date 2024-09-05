@@ -16,9 +16,8 @@ const CategoryPage: React.FC = () => {
     [date: string]: Transactions[];
   }>({});
 
-  const { profile } = useProfileContext();
+  const userContext = useUserContext();
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const fetchCategoryTransactions = async () => {
@@ -101,8 +100,7 @@ const CategoryPage: React.FC = () => {
                 {groupedTransactions[date].map((transaction) => (
                   <div
                     className="flex justify-between gap-4 items-center mb-4"
-                    key={transaction.id}
-                  >
+                    key={transaction.id}>
                     <div className="text-lg rounded-full p-2 bg-gray w-12 h-12 flex items-center justify-center">
                       {categoryIcons[transaction.category] || "🛒"}
                     </div>
@@ -121,8 +119,7 @@ const CategoryPage: React.FC = () => {
                         transaction.income_expenses === "income"
                           ? "text-income"
                           : "text-expenses"
-                      }`}
-                    >
+                      }`}>
                       {transaction.income_expenses === "expense" &&
                       transaction.amount > 0
                         ? "-"
