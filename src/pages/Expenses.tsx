@@ -69,15 +69,47 @@ const Expenses = () => {
         account_id: accountId,
       };
 
+
+
       const { data, error } = await supabaseClient
         .from("transactions")
         .insert([expenseData]);
+
+
 
       if (error) {
         console.error("Error inserting data:", error);
         setErrorMessage("Failed to add expense. Please try again.");
         return;
       }
+
+      const accountAmount=userContext.account?.amount ?? 0
+      const profileId= userContext.profile?.id
+
+if(!profileId){
+  return
+}
+
+const expenseToAmount:TablesInsert<"account">={
+  amount:accountAmount-amount,
+  profile_id:profileId
+}
+
+
+const amountResponse = await supabaseClient
+.from("account")
+
+.update(expenseToAmount)
+.eq('profile_id', profileId)
+
+
+
+
+if (amountResponse.error) {
+console.error("Error inserting data:", error);
+setErrorMessage("Failed to add expense. Please try again.");
+return;
+}
 
       setSuccessMessage("Expense added successfully!");
       setErrorMessage("");

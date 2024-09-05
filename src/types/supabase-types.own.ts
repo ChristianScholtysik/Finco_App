@@ -15,7 +15,7 @@ export interface IProfile {
 
 export interface IAccount {
   id: string;
-  amount: number;
+  amount: number | null;
   created_at: string;
   profile_id: string;
 }
