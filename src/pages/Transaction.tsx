@@ -8,6 +8,9 @@ import { Transactions } from "../types/supabase-types.own";
 import { useEffect, useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
 import { useProfileContext } from "../context/ProfileContext";
+// import { DateRange } from "react-date-range";
+// import "react-date-range/dist/styles.css";
+// import "react-date-range/dist/theme/default.css";
 
 const Transaction = () => {
 
@@ -19,6 +22,14 @@ const Transaction = () => {
 
   const [income, setIncome] = useState<Transactions[]>([]);
   const [expenses, setExpenses] = useState<Transactions[]>([]);
+
+  // const [selectionRange, setSelectionRange] = useState({
+  //   startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+  //   endDate: new Date(),
+  //   key: "selection",
+  // });
+
+  // const [openCalendar, setOpenCalendar] = useState(false);
 
   useEffect(() => {
     const fetchAllTransactions = async () => {
@@ -142,6 +153,30 @@ const Transaction = () => {
           <IncomeField text={totalIncome.toFixed(2)} />{" "}
           <ExpenseField text={totalExpenses.toFixed(2)} />
         </div>
+{/* 
+        <div className="relative text-center">
+            <button
+              onClick={() => setOpenCalendar(!openCalendar)}
+              className="px-4 py-2 border border-gray-300 text-xs rounded-lg shadow-sm mb-4 bg-gray-200 text-inactive"
+            >
+              {selectionRange.startDate.toDateString()} -{" "}
+              {selectionRange.endDate.toDateString()}
+            </button>
+
+            {openCalendar && (
+              <div className="absolute z-10 mt-2">
+                <DateRange
+                  ranges={[selectionRange]}
+                  onChange={(item: any) => setSelectionRange(item.selection)}
+                  minDate={new Date(1900, 0, 1)}
+                  maxDate={today}
+                  showDateDisplay={false}
+                  rangeColors={["#298bff"]}
+                />
+              </div> 
+            )}
+          </div>*/}
+
 
         {Object.keys(groupedTransactions).map((date) => (
           <div key={date}>
