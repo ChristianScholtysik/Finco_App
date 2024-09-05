@@ -69,7 +69,7 @@ const Home: React.FC = () => {
     <div
       className="flex items-center justify-center flex-col h-full
     ">
-      <section className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+      <section className="bg-white p-6 rounded-lg  w-full max-w-sm">
         <div className="flex items-center justify-between mb-5">
           <div>
             <h2 className="font-Urbanist text-sm">Welcome back</h2>

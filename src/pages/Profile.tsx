@@ -132,7 +132,7 @@ const Profile = () => {
 
   return (
     <div className="flex items-center justify-center ">
-      <section className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm ">
+      <section className="bg-white p-6 rounded-lg w-full max-w-sm ">
         <div className="flex justify-between items-center mb-10 w-full">
           <Logo />
           {avatarUrl ? (
