@@ -12,7 +12,7 @@ const IncomeField: React.FC<IncomeFieldProps> = ({ text }) => {
         <div className="flex flex-col justify-end">
           <p className=" text-small">Income</p>
 
-          <p className="text-xs font-semibold"> +{text}</p>
+          <p className="text-xs font-semibold">+{text}</p>
         </div>
       </div>
     </section>

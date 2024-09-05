@@ -16,43 +16,49 @@ import Profile from "./pages/Profile";
 import CategoryPage from "./pages/CategoryPage";
 import { useState } from "react";
 import { IAccount } from "./types/supabase-types.own";
+import { TransactionProvider } from "./context/TotalIncomeContext";
 // import { AccountContext } from "./context/AccountContext";
 // const [account, setAccount] = useState<IAccount | null>(null);
 
 function App() {
   return (
     <UserProvider>
-      {/* <ProfileProvider> */}
-      {/* <AccountContext.Provider value={{ account, setAccount }}> */}
-      <BrowserRouter>
-        <div>
-          <main>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route element={<PrivateRoute />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/transaction" element={<Transaction />} />
-                <Route
-                  path="/transaction-search-result"
-                  element={<SearchResultPage />}
-                />
-                <Route path="/add-transaction-income" element={<Income />} />
-                <Route
-                  path="/add-transaction-expenses"
-                  element={<Expenses />}
-                />
-                <Route path="/report" element={<Report />} />
-                <Route path="/category/:category" element={<CategoryPage />} />
-                <Route path="/myprofile" element={<MyProfile />} />
-                <Route path="/profile" element={<Profile />} />
-              </Route>
-            </Routes>
-          </main>
-        </div>
-      </BrowserRouter>
-      {/* </AccountContext.Provider> */}
-      {/* </ProfileProvider> */}
+      <TransactionProvider>
+        {/* <ProfileProvider> */}
+        {/* <AccountContext.Provider value={{ account, setAccount }}> */}
+        <BrowserRouter>
+          <div>
+            <main>
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route element={<PrivateRoute />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/transaction" element={<Transaction />} />
+                  <Route
+                    path="/transaction-search-result"
+                    element={<SearchResultPage />}
+                  />
+                  <Route path="/add-transaction-income" element={<Income />} />
+                  <Route
+                    path="/add-transaction-expenses"
+                    element={<Expenses />}
+                  />
+                  <Route path="/report" element={<Report />} />
+                  <Route
+                    path="/category/:category"
+                    element={<CategoryPage />}
+                  />
+                  <Route path="/myprofile" element={<MyProfile />} />
+                  <Route path="/profile" element={<Profile />} />
+                </Route>
+              </Routes>
+            </main>
+          </div>
+        </BrowserRouter>
+        {/* </AccountContext.Provider> */}
+        {/* </ProfileProvider> */}
+      </TransactionProvider>
     </UserProvider>
   );
 }
