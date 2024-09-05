@@ -3,15 +3,16 @@ import Logo from "../components/Logo";
 import Navbar from "../components/Navbar";
 import { MdArrowForwardIos } from "react-icons/md";
 import { LuLogOut } from "react-icons/lu";
-import { useProfileData } from "../context/ProfileContext";
+
 import { useUserContext } from "../context/UserContext";
 import { useEffect, useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
 import { IoMdPerson } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { useProfileContext } from "../context/ProfileContext";
 
 const Profile = () => {
-  const { profile, setProfile } = useProfileData();
+  const { profile, setProfile } = useProfileContext();
 
   const userContext = useUserContext();
   const user = userContext?.user;
@@ -34,9 +35,16 @@ const Profile = () => {
         .single();
 
       if (profileResponse.error) {
-        console.error("Error getting profile:", profileResponse.error.message);
-      } else if (profileResponse.data) {
-        setProfile(profileResponse.data);
+        console.error("Error fetching profile data:", profileResponse.error);
+      } else {
+        const profileData = profileResponse.data;
+
+        const formattedProfile = {
+          ...profileData,
+          created_at: new Date(profileData.created_at),
+        };
+
+        setProfile(formattedProfile);
 
         if (profileResponse.data.avatar_url) {
           setAvatarUrl(profileResponse.data.avatar_url);

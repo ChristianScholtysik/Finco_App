@@ -57,7 +57,8 @@ const Expenses = () => {
     }
 
     try {
-      const formattedAmount = parseFloat(amount.toFixed(2)) * -1;
+      // const formattedAmount = parseFloat(amount.toFixed(2)) * -1;
+      const formattedAmount = parseFloat(amount.toFixed(2)) * 1;
 
       const expenseData: TablesInsert<"transactions"> = {
         name: name,
@@ -97,8 +98,7 @@ const Expenses = () => {
         <div className="mb-6">
           <button
             onClick={() => window.history.back()}
-            className="text-black hover:text-gray font-medium"
-          >
+            className="text-black hover:text-gray font-medium">
             &larr;
           </button>
         </div>
@@ -140,8 +140,7 @@ const Expenses = () => {
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
               required
-              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray"
-            >
+              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray">
               <option value="">Categories</option>
               <option value="Food & Drink">Food & Drink</option>
               <option value="Salary">Salary</option>

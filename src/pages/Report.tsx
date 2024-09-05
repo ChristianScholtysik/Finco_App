@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import supabaseClient from "../lib/supabaseClient";
-import { useProfileData } from "../context/ProfileContext";
-import { SupabaseClient } from "@supabase/supabase-js";
+
+import { useProfileContext } from "../context/ProfileContext";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
@@ -14,7 +14,7 @@ const Report: React.FC = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  const { profile } = useProfileData();
+  const { profile } = useProfileContext();
 
   if (!profile) {
     console.log("No profile found.");
