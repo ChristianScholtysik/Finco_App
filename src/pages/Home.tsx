@@ -7,12 +7,14 @@ import CreditCard from "../components/CreditCard";
 import ExpenseFieldXL from "../components/ExpenseFieldXL";
 import IncomeFieldXL from "../components/IncomeFieldXL";
 import TotalWalletField from "../components/TotalWalletField";
-import { useProfileContext } from "../context/ProfileContext";
+
 
 const Home: React.FC = () => {
-  const { profile, setProfile } = useProfileContext();
+
   const userContext = useUserContext();
   const user = userContext?.user;
+
+
 
   const [showDetails, setShowDetails] = useState(false);
 
@@ -24,36 +26,36 @@ const Home: React.FC = () => {
     return null;
   }
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      const profileResponse = await supabaseClient
-        .from("profiles")
-        .select(
-          "id, card_number, first_name, last_name, avatar_url, created_at"
-        )
-        .eq("id", user?.id)
-        .single();
+  // useEffect(() => {
+  //   const fetchProfileData = async () => {
+  //     const profileResponse = await supabaseClient
+  //       .from("profiles")
+  //       .select(
+  //         "id, card_number, first_name, last_name, avatar_url, created_at"
+  //       )
+  //       .eq("id", user?.id)
+  //       .single();
 
-      if (profileResponse.error) {
-        console.error("Error fetching profile data:", profileResponse.error);
-      } else {
-        const profileData = profileResponse.data;
+  //     if (profileResponse.error) {
+  //       console.error("Error fetching profile data:", profileResponse.error);
+  //     } else {
+  //       const profileData = profileResponse.data;
 
-        const formattedProfile = {
-          ...profileData,
-          created_at: new Date(profileData.created_at),
-        };
+  //       const formattedProfile = {
+  //         ...profileData,
+  //         created_at: new Date(profileData.created_at),
+  //       };
 
-        setProfile(formattedProfile);
-      }
-    };
+  //       userContext.profile(formattedProfile);
+  //     }
+  //   };
 
-    if (user) {
-      fetchProfileData();
-    }
-  }, [user, setProfile]);
+  //   if (user) {
+  //     fetchProfileData();
+  //   }
+  // }, [user, setProfile]);
 
-  if (!profile) {
+  if (!userContext.profile) {
     return <p>Loading...</p>;
   }
 
@@ -66,14 +68,14 @@ const Home: React.FC = () => {
           <div>
             <h2 className="font-Urbanist text-sm">Welcome back</h2>
             <p className="font-Urbanist text-lg">
-              {profile.first_name} {profile.last_name}
+              {userContext.profile.first_name} {userContext.profile.last_name}
             </p>
           </div>
 
-          {profile?.avatar_url ? (
+          {userContext.profile?.avatar_url ? (
             <img
               alt="User Avatar"
-              src={profile.avatar_url}
+              src={userContext.profile.avatar_url}
               className="inline-block h-14 w-14 rounded-full ring-2 ring-white cursor-pointer object-cover object-center"
             />
           ) : (

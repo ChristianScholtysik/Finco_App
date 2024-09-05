@@ -9,10 +9,10 @@ import { useEffect, useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
 import { IoMdPerson } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { useProfileContext } from "../context/ProfileContext";
+
 
 const Profile = () => {
-  const { profile, setProfile } = useProfileContext();
+
 
   const userContext = useUserContext();
   const user = userContext?.user;
@@ -26,34 +26,7 @@ const Profile = () => {
     return;
   }
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      const profileResponse = await supabaseClient
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .single();
-
-      if (profileResponse.error) {
-        console.error("Error fetching profile data:", profileResponse.error);
-      } else {
-        const profileData = profileResponse.data;
-
-        const formattedProfile = {
-          ...profileData,
-          created_at: new Date(profileData.created_at),
-        };
-
-        setProfile(formattedProfile);
-
-        if (profileResponse.data.avatar_url) {
-          setAvatarUrl(profileResponse.data.avatar_url);
-        }
-      }
-    };
-
-    fetchUserProfile();
-  }, [user]);
+  
 
   const handleUpload = async () => {
     if (!avatarFile) {
@@ -136,7 +109,7 @@ const Profile = () => {
     setUploading(false);
   };
 
-  if (!profile || !user) {
+  if (!userContext.profile || !user) {
     return <p>Loading...</p>;
   }
 
@@ -193,8 +166,8 @@ const Profile = () => {
           <div className="flex items-center gap-2">
             <IoMdPerson />
             <section className="flex flex-col text-left">
-              <span>First name: {profile.first_name}</span>
-              <span>Last name: {profile.last_name}</span>
+              <span>First name: {userContext.profile.first_name}</span>
+              <span>Last name: {userContext.profile.last_name}</span>
               <span>Email: {user.email}</span>
               <span>
                 Account created: {new Date(user.created_at).toLocaleString()}

@@ -7,7 +7,7 @@ import supabaseClient from "../lib/supabaseClient";
 import { Transactions } from "../types/supabase-types.own";
 
 import categoryIcons from "../assets/categoryIcons";
-import { useProfileContext } from "../context/ProfileContext";
+import { useUserContext } from "../context/UserContext";
 
 const CategoryPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();
@@ -15,7 +15,8 @@ const CategoryPage: React.FC = () => {
   const [groupedTransactions, setGroupedTransactions] = useState<{
     [date: string]: Transactions[];
   }>({});
-  const { profile } = useProfileContext();
+
+  const userContext = useUserContext();
 
   useEffect(() => {
     const fetchCategoryTransactions = async () => {
@@ -66,10 +67,10 @@ const CategoryPage: React.FC = () => {
         <section className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="flex justify-between items-center mb-10 w-full">
             <Logo />
-            {profile?.avatar_url ? (
+            {userContext?.profile?.avatar_url ? (
               <img
                 alt="User Avatar"
-                src={profile.avatar_url}
+                src={userContext?.profile?.avatar_url}
                 className="inline-block h-14 w-14 rounded-full ring-2 ring-white cursor-pointer object-cover object-center"
               />
             ) : (

@@ -9,7 +9,7 @@ export interface IProfile {
   first_name: string;
   last_name: string;
   avatar_url?: string | null;
-  created_at: Date;
+  created_at: string;
   card_number: number;
 }
 

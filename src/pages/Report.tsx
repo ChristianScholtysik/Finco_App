@@ -10,21 +10,24 @@ import "react-date-range/dist/theme/default.css";
 import Navbar from "../components/Navbar";
 import Logo from "../components/Logo";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { useUserContext } from "../context/UserContext";
 
 
-import { useProfileContext } from "../context/ProfileContext";
+
 
 
 ChartJS.register(Title, Tooltip, ArcElement, ChartDataLabels);
 
 const Report: React.FC = () => {
+  const userContext = useUserContext();
+
   const [data, setData] = useState<{ labels: string[]; values: number[] }>({
     labels: [],
     values: [],
   });
   const [loading, setLoading] = useState(true);
 
-  const { profile } = useProfileContext();
+
 
   const [selectionRange, setSelectionRange] = useState({
     startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
@@ -51,7 +54,7 @@ const Report: React.FC = () => {
   ];
   const currentMonth = monthNames[today.getMonth()];
 
-  if (!profile) {
+  if (!userContext?.profile) {
     console.log("No profile found.");
     return null;
   }
@@ -60,18 +63,18 @@ const Report: React.FC = () => {
     const fetchMonthlyExpensesByCategory = async () => {
       console.log("Fetching data...");
 
-      if (!profile) {
+      if (!userContext.profile) {
         console.log("No profile found, aborting...");
         setLoading(false);
         return;
       }
 
-      console.log("Profile found:", profile);
+      console.log("Profile found:", userContext.profile);
 
       const accountResponse = await supabaseClient
         .from("account")
         .select("id")
-        .eq("profile_id", profile.id)
+        .eq("profile_id", userContext.profile.id)
         .single();
 
       if (accountResponse.error || !accountResponse.data) {
@@ -118,7 +121,7 @@ const Report: React.FC = () => {
     };
 
     fetchMonthlyExpensesByCategory();
-  }, [profile, selectionRange]);
+  }, [userContext.profile, selectionRange]);
 
   if (loading) {
     console.log("Loading...");

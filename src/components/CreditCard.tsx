@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
-import { ProfileContext } from "../context/ProfileContext";
+import { useUserContext } from "../context/UserContext";
+
 
 const CreditCard = () => {
-  const profile = useContext(ProfileContext);
+  const userContext = useUserContext();
+
 
   return (
     <div className="w-81 h-48 rounded-2xl shadow-xl bg-gradient-to-r from-purple-500 to-blue-500 p-4 flex flex-col justify-between text-white">
@@ -27,14 +29,14 @@ const CreditCard = () => {
       </header>
       <div className="flex">
         <p className="font-Urbanist text-sm ml-4 ">
-          {profile?.profile?.first_name}
+          {userContext?.profile?.first_name}
         </p>
         <p className="font-Urbanist text-sm ml-2 ">
-          {profile?.profile?.last_name}
+          {userContext?.profile?.last_name}
         </p>
       </div>
       <p className="font-Urbanist text-sm ml-4">
-        **** **** **** {profile?.profile?.card_number.toString().slice(-4)}
+        **** **** **** {userContext?.profile?.card_number.toString().slice(-4)}
       </p>
 
       <div className="flex justify-between items-center">
