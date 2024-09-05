@@ -368,9 +368,9 @@ const Transaction = () => {
     fetchExpenseTransactions();
   }, []);
 
-  const totalExpenses = expenses.reduce((total, expense) => {
-    return total + expense.amount;
-  }, 0);
+  // const totalExpenses = expenses.reduce((total, expense) => {
+  //   return total + expense.amount;
+  // }, 0);
 
   console.log("Income", income);
   console.log("Expenses:", expenses);

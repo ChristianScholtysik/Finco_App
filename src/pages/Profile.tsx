@@ -5,7 +5,7 @@ import { MdArrowForwardIos } from "react-icons/md";
 import { LuLogOut } from "react-icons/lu";
 
 import { useUserContext } from "../context/UserContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
 import { IoMdPerson } from "react-icons/io";
 import { useNavigate } from "react-router-dom";

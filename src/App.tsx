@@ -14,8 +14,7 @@ import PrivateRoute from "./lib/PrivateRoute";
 // import { ProfileProvider } from "./context/ProfileContext";
 import Profile from "./pages/Profile";
 import CategoryPage from "./pages/CategoryPage";
-import { useState } from "react";
-import { IAccount } from "./types/supabase-types.own";
+
 import { TransactionProvider } from "./context/TotalIncomeContext";
 // import { AccountContext } from "./context/AccountContext";
 // const [account, setAccount] = useState<IAccount | null>(null);
