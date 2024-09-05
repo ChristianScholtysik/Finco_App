@@ -3,7 +3,7 @@ import ButtonExpense from "./ButtonExpense";
 const ExpenseFieldXL = () => {
   return (
     <section>
-      <div className="flex flex-col items-center bg-zinc-300 rounded-lg ml-2 py-5 px-5 gap-4">
+      <div className="flex flex-col items-center bg-another-gradient rounded-lg ml-2 py-5 px-5 gap-4">
         <ButtonExpense />
 
         <div className="flex flex-col items-center">

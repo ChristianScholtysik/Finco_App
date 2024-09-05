@@ -49,8 +49,8 @@ export default {
       },
 
       backgroundImage: {
-        "custom-gradient": "linear-gradient(to right, #6ee7b7, #a4c2f4)",
-        "another-gradient": "linear-gradient(to right,#e76e7e , #a4c2f4)",
+        "custom-gradient": "gradient-to-b from-[] to-[] ",
+        "another-gradient": "linear-gradient(to bottom,#FFCF53 , #FF9900)",
       },
     },
   },

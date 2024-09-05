@@ -5,8 +5,9 @@ import Navbar from "../components/Navbar";
 import Logo from "../components/Logo";
 import supabaseClient from "../lib/supabaseClient";
 import { Transactions } from "../types/supabase-types.own";
-import { useProfileData } from "../context/ProfileContext";
+
 import categoryIcons from "../assets/categoryIcons";
+import { useProfileContext } from "../context/ProfileContext";
 
 const CategoryPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();
@@ -14,7 +15,7 @@ const CategoryPage: React.FC = () => {
   const [groupedTransactions, setGroupedTransactions] = useState<{
     [date: string]: Transactions[];
   }>({});
-  const { profile } = useProfileData();
+  const { profile } = useProfileContext();
 
   useEffect(() => {
     const fetchCategoryTransactions = async () => {
@@ -79,8 +80,7 @@ const CategoryPage: React.FC = () => {
           </div>
           <button
             onClick={() => window.history.back()}
-            className="text-black hover:text-gray font-medium"
-          >
+            className="text-black hover:text-gray font-medium">
             &larr;
           </button>
           <h1 className="font-bold text-2xl mb-4">Category: {category}</h1>
@@ -99,8 +99,7 @@ const CategoryPage: React.FC = () => {
                 {groupedTransactions[date].map((transaction) => (
                   <div
                     className="flex justify-between gap-4 items-center mb-4"
-                    key={transaction.id}
-                  >
+                    key={transaction.id}>
                     <div className="text-lg rounded-full p-2 bg-gray w-12 h-12 flex items-center justify-center">
                       {categoryIcons[transaction.category] || "🛒"}
                     </div>
@@ -119,8 +118,7 @@ const CategoryPage: React.FC = () => {
                         transaction.income_expenses === "income"
                           ? "text-income"
                           : "text-expenses"
-                      }`}
-                    >
+                      }`}>
                       {transaction.income_expenses === "expense" &&
                       transaction.amount > 0
                         ? "-"

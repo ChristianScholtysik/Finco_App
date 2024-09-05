@@ -3,7 +3,7 @@ import { Chart as ChartJS, Title, Tooltip, ArcElement } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import supabaseClient from "../lib/supabaseClient";
 
-import { useProfileData } from "../context/ProfileContext";
+
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
