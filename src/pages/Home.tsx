@@ -82,7 +82,7 @@ const Home: React.FC = () => {
             <img
               alt="User Avatar"
               src={userContext.profile.avatar_url}
-              className="inline-block h-14 w-14 rounded-full ring-2 ring-white cursor-pointer object-cover object-center"
+              className="inline-block h-14 w-14 rounded-full cursor-pointer object-cover object-center"
             />
           ) : (
             <div className="inline-block h-14 w-14 rounded-full bg-gray-300 flex items-center justify-center">
@@ -92,7 +92,7 @@ const Home: React.FC = () => {
         </div>
 
         <CreditCard />
-        <p className="font-Urbanist text-lg mb-3 mt-7">Total wallet</p>
+        <p className="font-Urbanist text-lg mb-10 mt-7">Total wallet</p>
 
         <TotalWalletField onToggle={toggleDetails} />
 
