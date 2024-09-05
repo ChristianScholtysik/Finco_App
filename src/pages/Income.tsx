@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import ButtonBlue from "../components/ButtonBlue";
 import supabaseClient from "../lib/supabaseClient";
 import { TablesInsert } from "../types/supabase-types-gen";
-import CreditCard from "../components/CreditCard";
+
 import { useUserContext } from "../context/UserContext";
-import { useProfileData } from "../context/ProfileContext";
 
 const Income = () => {
   // Verbindung zum Context
@@ -76,7 +75,8 @@ const Income = () => {
       };
 
       // Insert Befehl an Supabase
-      const { data, error } = await supabaseClient
+      // const { data, error } = await supabaseClient
+      const { error } = await supabaseClient
         .from("transactions")
         .insert([incomeData]);
 
@@ -86,6 +86,30 @@ const Income = () => {
       if (error) {
         console.error("Error inserting data:", error);
         setErrorMessage("Failed to add income. Please try again.");
+        return;
+      }
+
+      const accountAmount = userContext.account?.amount ?? 0;
+      const profileId = userContext.profile?.id;
+
+      if (!profileId) {
+        return;
+      }
+
+      const expenseToAmount: TablesInsert<"account"> = {
+        amount: accountAmount + amount,
+        profile_id: profileId,
+      };
+
+      const amountResponse = await supabaseClient
+        .from("account")
+
+        .update(expenseToAmount)
+        .eq("profile_id", profileId);
+
+      if (amountResponse.error) {
+        console.error("Error inserting data:", error);
+        setErrorMessage("Failed to add expense. Please try again.");
         return;
       }
 
@@ -109,8 +133,7 @@ const Income = () => {
         <div className="mb-6">
           <button
             onClick={() => window.history.back()}
-            className="text-black hover:text-gray font-medium"
-          >
+            className="text-black hover:text-gray font-medium">
             &larr;
           </button>
         </div>
@@ -154,8 +177,7 @@ const Income = () => {
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
               required
-              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray"
-            >
+              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray">
               <option value="">Categories</option>
               <option value="Food & Drink">Food & Drink</option>
               <option value="Salary">Salary</option>

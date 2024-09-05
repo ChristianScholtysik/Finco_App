@@ -103,19 +103,20 @@ const LoginForm = () => {
           onClick={handleResetPassword}>
           Forgot password?
         </p>
+
+        <div className="w-full mb-6">
+          <ButtonBlue text="Login" />
+        </div>
         {errorMessage && (
-          <p className="error-message text-red-600 text-center font-bold">
+          <p className=" text-red-600 text-sm text-center font-sm mb-10">
             {errorMessage}
           </p>
         )}
         {successMessage && (
-          <p className="success-message text-green-600 text-center font-bold">
+          <p className="text-green-600 text-sm text-center font-sm mb-10">
             {successMessage}
           </p>
         )}
-        <div className="w-full mb-16">
-          <ButtonBlue text="Login" />
-        </div>
         <div className="flex justify-center gap-2">
           <p className="text-tBase text-center text-small">
             Don’t have any account?

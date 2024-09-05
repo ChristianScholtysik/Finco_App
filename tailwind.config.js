@@ -49,8 +49,11 @@ export default {
       },
 
       backgroundImage: {
-        "custom-gradient": "gradient-to-b from-[] to-[] ",
+        "custom-gradient": "linear-gradient(to bottom,#44bbfe , #1e78fe)",
+
         "another-gradient": "linear-gradient(to bottom,#FFCF53 , #FF9900)",
+        "expense-gradient": "linear-gradient(to bottom,#FFFF , #FF9900)",
+        "income-gradient": "linear-gradient(to bottom,#FFFF , #1e78fe)",
       },
     },
   },

@@ -9,7 +9,7 @@ const categoryIcons: Record<string, string> = {
   "Rent/Mortgage": "🏠",
   "Healthcare & Medical Expenses": "⛑️",
   "Dining Out & Takeaway": "🥂",
-  Other: "💰",
+  Other: "🦄",
 };
 
 export default categoryIcons;

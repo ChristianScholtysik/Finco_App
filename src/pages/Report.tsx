@@ -19,7 +19,14 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import Navbar from "../components/Navbar";
 import Logo from "../components/Logo";
+
 import { useProfileContext } from "../context/ProfileContext";
+
+
+
+
+
+
 
 ChartJS.register(
   Title,
@@ -33,19 +40,23 @@ ChartJS.register(
 );
 
 const Report: React.FC = () => {
+
   const [data, setData] = useState<{
     labels: string[];
     values: number[];
     incomeExpenses: string[];
   }>({
+
     labels: [],
     values: [],
     incomeExpenses: [],
   });
   const [loading, setLoading] = useState(true);
+
   const { profile } = useProfileContext();
   const [isWeeklyOpen, setIsWeeklyOpen] = useState(true);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+
   const [selectionRange, setSelectionRange] = useState({
     startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     endDate: new Date(),
@@ -54,9 +65,11 @@ const Report: React.FC = () => {
   const [openCalendar, setOpenCalendar] = useState(false);
   const today = new Date();
 
+
   useEffect(() => {
     const fetchMonthlyExpensesByCategory = async () => {
       if (!profile) {
+
         setLoading(false);
         return;
       }
@@ -64,7 +77,7 @@ const Report: React.FC = () => {
       const accountResponse = await supabaseClient
         .from("account")
         .select("id")
-        .eq("profile_id", profile.id)
+        .eq("profile_id", userContext.profile.id)
         .single();
 
       if (accountResponse.error || !accountResponse.data) {
@@ -120,7 +133,7 @@ const Report: React.FC = () => {
     };
 
     fetchMonthlyExpensesByCategory();
-  }, [profile, selectionRange]);
+  }, [userContext.profile, selectionRange]);
 
   if (loading) {
     return <>Loading...</>;

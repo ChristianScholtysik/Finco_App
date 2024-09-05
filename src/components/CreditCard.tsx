@@ -1,8 +1,10 @@
-import { useContext, useState } from "react";
-import { ProfileContext } from "../context/ProfileContext";
+
+import { useUserContext } from "../context/UserContext";
+
 
 const CreditCard = () => {
-  const profile = useContext(ProfileContext);
+  const userContext = useUserContext();
+
 
   return (
     <div className="w-81 h-48 rounded-2xl shadow-xl bg-gradient-to-r from-purple-500 to-blue-500 p-4 flex flex-col justify-between text-white">
@@ -14,7 +16,8 @@ const CreditCard = () => {
             className="h-3 w-3 text-white"
             fill="none"
             viewBox="0 0 24 24"
-            stroke="currentColor">
+            stroke="currentColor"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -25,20 +28,20 @@ const CreditCard = () => {
         </span>
       </header>
       <div className="flex">
-        <p className="font-Urbanist text-sm ml-2 ">
-          {profile?.profile?.first_name}
+        <p className="font-Urbanist text-sm ml-4 ">
+          {userContext?.profile?.first_name}
         </p>
         <p className="font-Urbanist text-sm ml-2 ">
-          {profile?.profile?.last_name}
+          {userContext?.profile?.last_name}
         </p>
       </div>
-      <p className="font-Urbanist text-sm ml-2">
-        **** **** **** {profile?.profile?.card_number.toString().slice(-4)}
+      <p className="font-Urbanist text-sm ml-4">
+        **** **** **** {userContext?.profile?.card_number.toString().slice(-4)}
       </p>
 
       <div className="flex justify-between items-center">
         <img src="public/Group.svg" alt="Card Icon" className="w-8 h-6" />
-        <span className="text-xs">09/25</span>
+        <span className="text-xs mt-4">09/25</span>
       </div>
     </div>
   );

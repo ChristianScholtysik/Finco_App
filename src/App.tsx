@@ -11,14 +11,20 @@ import Report from "./pages/Report";
 import MyProfile from "./pages/MyProfile";
 import { UserProvider } from "./context/UserContext";
 import PrivateRoute from "./lib/PrivateRoute";
-import { ProfileProvider } from "./context/ProfileContext";
+// import { ProfileProvider } from "./context/ProfileContext";
 import Profile from "./pages/Profile";
 import CategoryPage from "./pages/CategoryPage";
+
+import { TransactionProvider } from "./context/TotalIncomeContext";
+// import { AccountContext } from "./context/AccountContext";
+// const [account, setAccount] = useState<IAccount | null>(null);
 
 function App() {
   return (
     <UserProvider>
-      <ProfileProvider>
+      <TransactionProvider>
+        {/* <ProfileProvider> */}
+        {/* <AccountContext.Provider value={{ account, setAccount }}> */}
         <BrowserRouter>
           <div>
             <main>
@@ -49,7 +55,9 @@ function App() {
             </main>
           </div>
         </BrowserRouter>
-      </ProfileProvider>
+        {/* </AccountContext.Provider> */}
+        {/* </ProfileProvider> */}
+      </TransactionProvider>
     </UserProvider>
   );
 }

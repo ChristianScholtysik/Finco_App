@@ -165,9 +165,20 @@ const SignUp = () => {
           {successMessage && (
             <p className="text-green-500 text-sm mb-4">{successMessage}</p>
           )}
-          <div className="w-full mb-10">
+          <div className="w-full mb-2">
             <ButtonBlue text="Sign Up" />
           </div>
+          {errorMessage && (
+            <p className=" text-red-600 text-sm text-center font-sm mb-10">
+              {errorMessage}
+            </p>
+          )}
+          {successMessage && (
+            <p className="text-green-600 text-sm text-center font-sm mb-10">
+              {successMessage}
+            </p>
+          )}
+
           <div className="flex justify-center gap-2">
             <p className="text-tBase text-center text-small">
               Already have an account?
