@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
-import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
+import { Chart as ChartJS, Title, Tooltip, ArcElement } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import supabaseClient from "../lib/supabaseClient";
 
+import { useProfileData } from "../context/ProfileContext";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import Navbar from "../components/Navbar";
+import Logo from "../components/Logo";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+
+
 import { useProfileContext } from "../context/ProfileContext";
 
-ChartJS.register(Title, Tooltip, Legend, ArcElement);
+
+ChartJS.register(Title, Tooltip, ArcElement, ChartDataLabels);
 
 const Report: React.FC = () => {
   const [data, setData] = useState<{ labels: string[]; values: number[] }>({
@@ -16,9 +26,34 @@ const Report: React.FC = () => {
 
   const { profile } = useProfileContext();
 
+  const [selectionRange, setSelectionRange] = useState({
+    startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+    endDate: new Date(),
+    key: "selection",
+  });
+
+  const [openCalendar, setOpenCalendar] = useState(false);
+  const today = new Date();
+
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const currentMonth = monthNames[today.getMonth()];
+
   if (!profile) {
     console.log("No profile found.");
-    return;
+    return null;
   }
 
   useEffect(() => {
@@ -39,34 +74,22 @@ const Report: React.FC = () => {
         .eq("profile_id", profile.id)
         .single();
 
-      if (!accountResponse) {
-        return "no Account found";
+      if (accountResponse.error || !accountResponse.data) {
+        console.log("Error or no account found.");
+        setLoading(false);
+        return;
       }
-      const accountId = accountResponse.data?.id;
 
-      if (!accountId) {
-        return "no Account found";
-      }
+      const accountId = accountResponse.data.id;
 
       const { data: transactions, error } = await supabaseClient
         .from("transactions")
-        .select("*")
-        .eq("account_id", accountId) // Verwende die account_id aus dem Profil
-        .gte("transaction_date", new Date().toISOString().slice(0, 7) + "-01") // Beginn des aktuellen Monats
-        .lt("transaction_date", new Date().toISOString().slice(0, 7) + "-30"); // Ende des aktuellen Monats
-      console.log(new Date().toISOString().slice(0, 7) + "-30");
 
-      const now = new Date();
+        .select("category, amount")
+        .eq("account_id", accountId)
+        .gte("transaction_date", selectionRange.startDate.toISOString())
+        .lte("transaction_date", selectionRange.endDate.toISOString());
 
-      // Berechnung des ersten Tages des letzten Monats
-      const startOfLastMonth = new Date(
-        now.getFullYear(),
-        now.getMonth() - 1,
-        1
-      );
-
-      // Berechnung des letzten Tages des letzten Monats
-      const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
 
       if (error) {
         console.log("Error fetching transactions:", error);
@@ -74,61 +97,59 @@ const Report: React.FC = () => {
         return;
       }
 
-      console.log("Fetched transactions:", transactions);
-
       const categoryTotals: Record<string, number> = {};
       transactions.forEach((transaction) => {
-        console.log("Processing transaction:", transaction);
-
-        // Überprüfen, ob die Kategorie vorhanden ist
         if (!categoryTotals[transaction.category]) {
-          console.log(
-            `Category ${transaction.category} not found, initializing.`
-          );
           categoryTotals[transaction.category] = 0;
         }
-
-        // wenn kategorie existiert, addiere ihr den betrag
         categoryTotals[transaction.category] += transaction.amount;
-        console.log(
-          `Updated category ${transaction.category}:`,
-          categoryTotals[transaction.category]
-        );
       });
 
-      console.log("Final category totals:", categoryTotals);
+      const positiveCategoryTotals = Object.fromEntries(
+        Object.entries(categoryTotals).filter(([_, amount]) => amount > 0)
+      );
 
-      // Setze die aggregierten Daten für die Darstellung im Chart
       setData({
-        labels: Object.keys(categoryTotals), // Kategorienamen als Labels
-        values: Object.values(categoryTotals), // Summen als Werte
+        labels: Object.keys(positiveCategoryTotals),
+        values: Object.values(positiveCategoryTotals),
       });
 
-      setLoading(false); // Setze den Ladezustand auf false
-      console.log("Data set for chart:", {
-        labels: Object.keys(categoryTotals),
-        values: Object.values(categoryTotals),
-      });
+      setLoading(false);
     };
 
-    // Daten werden abgerufen
     fetchMonthlyExpensesByCategory();
-  }, [profile]); // Profile als Abhängigkeit hinzufügen
+  }, [profile, selectionRange]);
 
   if (loading) {
     console.log("Loading...");
-    return <>Loading...</>; // Zeige einen Ladeindikator an, solange die Daten abgerufen werden
+    return <>Loading...</>;
   }
 
-  // Daten Donut
+  const categoryIcons: Record<string, string> = {
+    "Food & Drink": "🍕",
+    Salary: "💵",
+    Insurance: "🧯",
+    "Clothing & Accessories": "👚",
+    "Entertainment & Leisure": "🎮",
+    "Travel & Vacation": "🏖️",
+    "Utilities (Electricity, Water, Gas)": "🪫",
+    "Rent/Mortgage": "🏠",
+    "Healthcare & Medical Expenses": "⛑️",
+    "Dining Out & Takeaway": "🥂",
+    Other: "💰",
+  };
+
+  const labelsWithEmojis = data.labels.map(
+    (label) => `${categoryIcons[label] || "📊"} ${label}`
+  );
 
   const chartData = {
-    labels: data.labels, // Kategorien
+    labels: labelsWithEmojis,
     datasets: [
       {
-        data: data.values, // Summen
+        data: data.values,
         backgroundColor: [
-          "#FF6384", // Hintergrundfarbe für die Segmente
+          "#FF6384",
           "#36A2EB",
           "#FFCE56",
           "#E0E0E0",
@@ -141,35 +162,107 @@ const Report: React.FC = () => {
     ],
   };
 
-  console.log("Rendering chart with data:", chartData);
-
-  // Optionen Diagramm
-
   const chartOptions = {
     responsive: true,
     plugins: {
-      legend: {
-        position: "top" as const, // Legende
-      },
+      legend: { display: false },
       tooltip: {
         callbacks: {
-          label: function (context: any) {
-            const label = context.label || ""; // Label Segment
-            const value = context.raw || 0; // Wert Segment
-            return `${label}: ${value.toFixed(2)} €`; // Formatierter Tooltip
+          label: (context: any) => {
+            const label = context.label || "";
+            const value = context.raw || 0;
+            return `${label}: ${value.toFixed(2)} €`;
           },
         },
+      },
+      datalabels: {
+        color: "#000",
+        display: true,
+        formatter: (value: number, context: any) => {
+          const total = context.chart?.data.datasets[0].data.reduce(
+            (a: number, b: number) => a + b,
+            0
+          );
+          const percentage = total ? ((value / total) * 100).toFixed(2) : "0";
+          return `${percentage}%`;
+        },
+        anchor: "end",
+        align: "center",
+        offset: 10,
+        font: { size: 14, weight: "bold" },
       },
     },
   };
 
   return (
-    <>
-      <div className="">
-        <h2>Monthly Expenses by Category</h2>
-        <Chart type="doughnut" data={chartData} options={chartOptions} />
+    <section className="flex items-center justify-center flex-col">
+      <div className="bg-white max-w-sm w-full shadow-md">
+        <div className="p-6">
+          <Logo />
+          <h2 className="text-2xl font-bold mb-4">
+            Your Expenses in {currentMonth}
+          </h2>
+          <div className="relative text-center">
+            <button
+              onClick={() => setOpenCalendar(!openCalendar)}
+              className="px-4 py-2 border border-gray-300 text-xs rounded-lg shadow-sm mb-4 bg-gray-200 text-inactive"
+            >
+              {selectionRange.startDate.toDateString()} -{" "}
+              {selectionRange.endDate.toDateString()}
+            </button>
+
+            {openCalendar && (
+              <div className="absolute z-10 mt-2">
+                <DateRange
+                  ranges={[selectionRange]}
+                  onChange={(item: any) => setSelectionRange(item.selection)}
+                  minDate={new Date(1900, 0, 1)}
+                  maxDate={today}
+                  showDateDisplay={false}
+                  rangeColors={["#298bff"]}
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Chart */}
+          <div className="flex items-center justify-center px-8">
+            <Chart type="doughnut" data={chartData} options={chartOptions} />
+          </div>
+
+          <div className="mt-6">
+            <h2 className="text-md font-semibold mb-4">Main Categories</h2>
+            {data.labels.map((category, index) => (
+              <div
+                key={category}
+                className="mb-4 p-4 border-md border rounded-md"
+              >
+                <h4 className="text-md font-medium text-gray-800">
+                  {categoryIcons[category]} {category}
+                </h4>
+                <p>Amount: {data.values[index].toFixed(2)} €</p>
+                <p className="text-gray-600">
+                  Percentage:{" "}
+                  {(
+                    (data.values[index] /
+                      data.values.reduce((a, b) => a + b, 0)) *
+                    100
+                  ).toFixed(2)}
+                  %
+                </p>
+                <a
+                  href={`/category/${category}`}
+                  className="text-blue-500 text-sm hover:underline"
+                >
+                  View Details
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+        <Navbar />
       </div>
-    </>
+    </section>
   );
 };
 

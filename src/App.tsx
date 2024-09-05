@@ -13,6 +13,7 @@ import { UserProvider } from "./context/UserContext";
 import PrivateRoute from "./lib/PrivateRoute";
 import { ProfileProvider } from "./context/ProfileContext";
 import Profile from "./pages/Profile";
+import CategoryPage from "./pages/CategoryPage";
 
 function App() {
   return (
@@ -37,6 +38,10 @@ function App() {
                     element={<Expenses />}
                   />
                   <Route path="/report" element={<Report />} />
+                  <Route
+                    path="/category/:category"
+                    element={<CategoryPage />}
+                  />
                   <Route path="/myprofile" element={<MyProfile />} />
                   <Route path="/profile" element={<Profile />} />
                 </Route>
