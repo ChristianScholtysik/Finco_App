@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: ["prettier-plugin-tailwindcss"],
   theme: {
     extend: {
       colors: {
@@ -49,11 +49,9 @@ export default {
       },
 
       backgroundImage: {
-        'custom-gradient': 'linear-gradient(to right, #6ee7b7, #a4c2f4)',
-        'another-gradient': 'linear-gradient(to bottom, #6ee7b7, #a4c2f4)',
-        
+        "custom-gradient": "linear-gradient(to right, #6ee7b7, #a4c2f4)",
+        "another-gradient": "linear-gradient(to right,#e76e7e , #a4c2f4)",
       },
     },
   },
 };
-

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Chart as ChartJS, Title, Tooltip, ArcElement } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import supabaseClient from "../lib/supabaseClient";
+
 import { useProfileData } from "../context/ProfileContext";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
@@ -9,6 +10,10 @@ import "react-date-range/dist/theme/default.css";
 import Navbar from "../components/Navbar";
 import Logo from "../components/Logo";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+
+
+import { useProfileContext } from "../context/ProfileContext";
+
 
 ChartJS.register(Title, Tooltip, ArcElement, ChartDataLabels);
 
@@ -18,7 +23,8 @@ const Report: React.FC = () => {
     values: [],
   });
   const [loading, setLoading] = useState(true);
-  const { profile } = useProfileData();
+
+  const { profile } = useProfileContext();
 
   const [selectionRange, setSelectionRange] = useState({
     startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
@@ -78,10 +84,12 @@ const Report: React.FC = () => {
 
       const { data: transactions, error } = await supabaseClient
         .from("transactions")
+
         .select("category, amount")
         .eq("account_id", accountId)
         .gte("transaction_date", selectionRange.startDate.toISOString())
         .lte("transaction_date", selectionRange.endDate.toISOString());
+
 
       if (error) {
         console.log("Error fetching transactions:", error);

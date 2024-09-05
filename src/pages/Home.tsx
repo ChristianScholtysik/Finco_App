@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import supabaseClient from "../lib/supabaseClient";
 import { useUserContext } from "../context/UserContext";
-import { useProfileData } from "../context/ProfileContext";
+
 import CreditCard from "../components/CreditCard";
 import ExpenseFieldXL from "../components/ExpenseFieldXL";
 import IncomeFieldXL from "../components/IncomeFieldXL";
 import TotalWalletField from "../components/TotalWalletField";
+import { useProfileContext } from "../context/ProfileContext";
 
 const Home: React.FC = () => {
-  const { profile, setProfile } = useProfileData();
+  const { profile, setProfile } = useProfileContext();
   const userContext = useUserContext();
   const user = userContext?.user;
 
@@ -36,7 +37,14 @@ const Home: React.FC = () => {
       if (profileResponse.error) {
         console.error("Error fetching profile data:", profileResponse.error);
       } else {
-        setProfile(profileResponse.data);
+        const profileData = profileResponse.data;
+
+        const formattedProfile = {
+          ...profileData,
+          created_at: new Date(profileData.created_at),
+        };
+
+        setProfile(formattedProfile);
       }
     };
 
@@ -50,7 +58,9 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div className="flex items-center justify-center flex-col">
+    <div
+      className="flex items-center justify-center flex-col h-full
+    ">
       <section className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -83,8 +93,7 @@ const Home: React.FC = () => {
             showDetails
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
-          } flex gap-5 mt-6`}
-        >
+          } flex gap-5 mt-6`}>
           <IncomeFieldXL />
           <ExpenseFieldXL />
         </div>
