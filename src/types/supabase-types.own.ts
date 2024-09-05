@@ -12,3 +12,10 @@ export interface IProfile {
   created_at: Date;
   card_number: number;
 }
+
+export interface IAccount {
+  id: string;
+  amount: number;
+  created_at: string;
+  profile_id: string;
+}
