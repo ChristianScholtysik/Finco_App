@@ -10,14 +10,11 @@ import TotalWalletField from "../components/TotalWalletField";
 import { useTransactionContext } from "../context/TotalIncomeContext";
 import supabaseClient from "../lib/supabaseClient";
 
-
 const Home: React.FC = () => {
-
   const userContext = useUserContext();
   const user = userContext?.user;
 
-  
-  const incomeExpenses=  useTransactionContext()
+  const incomeExpenses = useTransactionContext();
   const incomeFieldText = incomeExpenses.totalIncome?.toFixed(2) ?? "0.00";
   const expenseFieldText = incomeExpenses.totalExpenses?.toFixed(2) ?? "0.00";
 
@@ -34,11 +31,12 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       if (!user) return;
-      
-   
+
       const profileResponse = await supabaseClient
         .from("profiles")
-        .select("id, card_number, first_name, last_name, avatar_url, created_at")
+        .select(
+          "id, card_number, first_name, last_name, avatar_url, created_at"
+        )
         .eq("id", user?.id)
         .single();
 
@@ -56,14 +54,12 @@ const Home: React.FC = () => {
       }
     };
 
-    fetchProfileData(); 
-  }, [location, user]); 
+    fetchProfileData();
+  }, [location, user]);
 
   if (!userContext.profile) {
     return <p>Loading...</p>;
   }
-
- 
 
   return (
     <div
@@ -103,7 +99,7 @@ const Home: React.FC = () => {
               : "-translate-y-10 opacity-0"
           } flex gap-5 mt-6`}>
           <IncomeFieldXL text={incomeFieldText} />
-          <ExpenseFieldXL text={expenseFieldText}/>
+          <ExpenseFieldXL text={expenseFieldText} />
         </div>
       </section>
 

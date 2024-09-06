@@ -7,6 +7,7 @@ interface IUserContext {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   account: IAccount | null;
+  setAccount: React.Dispatch<React.SetStateAction<IAccount | null>>;
   profile: IProfile | null;
   setProfile: React.Dispatch<React.SetStateAction<IProfile | null>>;
   loading: boolean;
@@ -72,7 +73,15 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, profile, account, setUser, setProfile, loading }}>
+      value={{
+        user,
+        profile,
+        account,
+        setAccount,
+        setUser,
+        setProfile,
+        loading,
+      }}>
       {children}
     </UserContext.Provider>
   );
