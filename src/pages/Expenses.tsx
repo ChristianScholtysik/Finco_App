@@ -20,7 +20,7 @@ const Expenses = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [accountId, setAccountId] = useState<string | null>(null);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAccountID = async () => {
@@ -71,13 +71,10 @@ const Expenses = () => {
         account_id: accountId,
       };
 
-
       // const { data, error } = await supabaseClient
-      const {  error } = await supabaseClient
+      const { error } = await supabaseClient
         .from("transactions")
         .insert([expenseData]);
-
-
 
       if (error) {
         console.error("Error inserting data:", error);
@@ -85,33 +82,29 @@ const Expenses = () => {
         return;
       }
 
-      const accountAmount=userContext.account?.amount ?? 0
-      const profileId= userContext.profile?.id
+      const accountAmount = userContext.account?.amount ?? 0;
+      const profileId = userContext.profile?.id;
 
-if(!profileId){
-  return
-}
+      if (!profileId) {
+        return;
+      }
 
-const expenseToAmount:TablesInsert<"account">={
-  amount:accountAmount-amount,
-  profile_id:profileId
-}
+      const expenseToAmount: TablesInsert<"account"> = {
+        amount: accountAmount - amount,
+        profile_id: profileId,
+      };
 
+      const amountResponse = await supabaseClient
+        .from("account")
 
-const amountResponse = await supabaseClient
-.from("account")
+        .update(expenseToAmount)
+        .eq("profile_id", profileId);
 
-.update(expenseToAmount)
-.eq('profile_id', profileId)
-
-
-
-
-if (amountResponse.error) {
-console.error("Error inserting data:", error);
-setErrorMessage("Failed to add expense. Please try again.");
-return;
-}
+      if (amountResponse.error) {
+        console.error("Error inserting data:", error);
+        setErrorMessage("Failed to add expense. Please try again.");
+        return;
+      }
 
       setSuccessMessage("Expense added successfully!");
       setErrorMessage("");
@@ -131,12 +124,12 @@ return;
       <div className="bg-white p-8 rounded-lg w-full max-w-sm">
         <div className="mb-6">
           <button
-           onClick={() => navigate(-1)}
+            onClick={() => navigate(-1)}
             className="text-black hover:text-gray font-medium">
             &larr;
           </button>
         </div>
-        <h1 className="text-2xl text-red-600 font-bold mb-6">Add Expense</h1>
+        <h1 className="text-2xl text-expenses font-bold mb-6">Add Expense</h1>
 
         <form onSubmit={addExpense}>
           {/* Name */}

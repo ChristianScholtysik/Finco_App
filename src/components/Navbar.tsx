@@ -188,7 +188,7 @@ const Navbar: React.FC = () => {
       </Link>
 
       {/* Profile */}
-      <Link to="/myprofile">
+      <Link to="/profile">
         <div className="flex flex-col items-center group cursor-pointer transition-all duration-300">
           {isActive("/profile") ? (
             <span className="text-[#0d1636] text-sm font-semibold">

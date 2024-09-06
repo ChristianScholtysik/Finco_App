@@ -179,7 +179,7 @@ const Income = () => {
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
               required
-              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray">
+              className="w-full px-6 py-4 pr-10 border-0 rounded-full text-tBase bg-gray ">
               <option value="">Categories</option>
               <option value="Food & Drink">Food & Drink</option>
               <option value="Salary">Salary</option>
