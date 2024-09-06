@@ -34,10 +34,7 @@ function App() {
                 <Route element={<PrivateRoute />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/transaction" element={<Transaction />} />
-                  <Route
-                    path="/transaction-search-result"
-                    element={<SearchResultPage />}
-                  />
+                  <Route path="/search-result" element={<SearchResultPage />} />
                   <Route path="/add-transaction-income" element={<Income />} />
                   <Route
                     path="/add-transaction-expenses"
