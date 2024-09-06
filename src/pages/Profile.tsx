@@ -5,7 +5,7 @@ import { IoMdPerson } from "react-icons/io";
 import { FiFeather } from "react-icons/fi";
 import Logo from "../components/Logo";
 import supabaseClient from "../lib/supabaseClient";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useUserContext } from "../context/UserContext";
 
@@ -143,15 +143,17 @@ const Profile = () => {
           "Welcome to your profile, where you can manage your account and
           personal details."
         </p>
-        <button className="bg-stone-200 text-tBase text-small font-base rounded-lg shadow-lg px-4 py-4 w-full flex justify-between items-center mb-4">
-          <div className="flex items-center gap-2">
-            <FiFeather />
-            <span>My wallet</span>
-          </div>
-          <div>
-            <MdArrowForwardIos />
-          </div>
-        </button>
+        <Link to="/mywallet">
+          <button className="bg-stone-200 text-tBase text-small font-base rounded-lg shadow-lg px-4 py-4 w-full flex justify-between items-center mb-4">
+            <div className="flex items-center gap-2">
+              <FiFeather />
+              <span>My wallet</span>
+            </div>
+            <div>
+              <MdArrowForwardIos />
+            </div>
+          </button>
+        </Link>
         <button className="bg-stone-200 text-tBase text-small font-base rounded-lg shadow-lg px-4 py-4 w-full flex justify-between items-center mb-4">
           <div className="flex items-center gap-2">
             <IoMdPerson />

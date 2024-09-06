@@ -16,7 +16,8 @@ import Profile from "./pages/Profile";
 import CategoryPage from "./pages/CategoryPage";
 
 import { TransactionProvider } from "./context/TotalIncomeContext";
-import MyProfile from "./pages/MyProfile";
+
+import MyWallet from "./pages/MyWallet";
 // import { AccountContext } from "./context/AccountContext";
 // const [account, setAccount] = useState<IAccount | null>(null);
 
@@ -46,7 +47,7 @@ function App() {
                     path="/category/:category"
                     element={<CategoryPage />}
                   />
-                  <Route path="/myprofile" element={<MyProfile />} />
+                  <Route path="/mywallet" element={<MyWallet />} />
                   <Route path="/profile" element={<Profile />} />
                 </Route>
               </Routes>
