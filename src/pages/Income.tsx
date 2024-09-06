@@ -4,7 +4,7 @@ import supabaseClient from "../lib/supabaseClient";
 import { TablesInsert } from "../types/supabase-types-gen";
 
 import { useUserContext } from "../context/UserContext";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Income = () => {
   // Verbindung zum Context
