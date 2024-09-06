@@ -1,5 +1,6 @@
 import { MdExpandMore } from "react-icons/md";
 import { useUserContext } from "../context/UserContext";
+import { useEffect, useState } from "react";
 
 interface TotalWalletFieldProps {
   onToggle: () => void;
@@ -12,12 +13,17 @@ const TotalWalletField: React.FC<TotalWalletFieldProps> = ({ onToggle }) => {
     month: "2-digit",
     year: "numeric",
   });
+  const [balance, setBalance] = useState<number | null>(null);
 
-  const balance = userContext.account?.amount;
   console.log(balance);
 
-  if (!balance) {
-    return;
+  useEffect(() => {
+    const updatedBalance = userContext.account?.amount;
+    setBalance(updatedBalance ?? 0);
+  }, [userContext.account]);
+
+  if (balance === null) {
+    return null;
   }
 
   return (
