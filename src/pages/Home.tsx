@@ -88,7 +88,7 @@ const Home: React.FC = () => {
         </div>
 
         <CreditCard />
-        <p className="font-Urbanist text-lg mb-10 mt-7">Total wallet</p>
+        <p className="font-Urbanist text-lg mb-8 mt-7">Total wallet</p>
 
         <TotalWalletField onToggle={toggleDetails} />
 
@@ -97,7 +97,7 @@ const Home: React.FC = () => {
             showDetails
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
-          } flex gap-5 mt-6 mb-12`}>
+          } flex gap-2 mt-6 mb-12`}>
           <IncomeFieldXL text={incomeFieldText} />
           <ExpenseFieldXL text={expenseFieldText} />
         </div>
