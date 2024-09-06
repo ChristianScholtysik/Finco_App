@@ -97,7 +97,7 @@ const Home: React.FC = () => {
             showDetails
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
-          } flex gap-5 mt-10 mb-6`}>
+          } flex gap-5 mt-6 mb-12`}>
           <IncomeFieldXL text={incomeFieldText} />
           <ExpenseFieldXL text={expenseFieldText} />
         </div>
