@@ -4,6 +4,7 @@ import supabaseClient from "../lib/supabaseClient";
 import { TablesInsert } from "../types/supabase-types-gen";
 import { useUserContext } from "../context/UserContext";
 import { Link } from "react-router-dom";
+import { IoIosArrowForward } from "react-icons/io";
 
 const Expenses = () => {
   const userContext = useUserContext();
@@ -105,6 +106,13 @@ const Expenses = () => {
         return;
       }
 
+      userContext.setAccount({
+        id: "",
+        created_at: "",
+        amount: expenseToAmount.amount,
+        profile_id: userContext.profile?.id ?? "",
+      });
+
       setSuccessMessage("Expense added successfully!");
       setErrorMessage("");
       setName("");
@@ -163,12 +171,13 @@ const Expenses = () => {
 
           {/* Category */}
           <p className="mb-2 font-normal text-sm text-tBase">Category</p>
-          <div className="mb-4 custom-select">
+
+          <div className="mb-4 custom-select relative">
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
               required
-              className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray">
+              className="w-full px-6 py-4 pr-10 border-0 rounded-full text-tBase bg-gray appearance-none">
               <option value="">Categories</option>
               <option value="Food & Drink">Food & Drink</option>
               <option value="Salary">Salary</option>
@@ -192,6 +201,9 @@ const Expenses = () => {
               </option>
               <option value="Other">Other</option>
             </select>
+            <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+              <IoIosArrowForward className="text-gray-400" />
+            </div>
           </div>
 
           {/* Date */}

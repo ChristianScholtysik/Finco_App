@@ -8,14 +8,15 @@ import SearchResultPage from "./pages/SearchResultPage";
 import Income from "./pages/Income";
 import Expenses from "./pages/Expenses";
 import Report from "./pages/Report";
-// import MyProfile from "./pages/MyProfile";
+
 import { UserProvider } from "./context/UserContext";
 import PrivateRoute from "./lib/PrivateRoute";
-// import { ProfileProvider } from "./context/ProfileContext";
+
 import Profile from "./pages/Profile";
 import CategoryPage from "./pages/CategoryPage";
 
 import { TransactionProvider } from "./context/TotalIncomeContext";
+import MyProfile from "./pages/MyProfile";
 // import { AccountContext } from "./context/AccountContext";
 // const [account, setAccount] = useState<IAccount | null>(null);
 
@@ -45,7 +46,7 @@ function App() {
                     path="/category/:category"
                     element={<CategoryPage />}
                   />
-                  {/* <Route path="/myprofile" element={<MyProfile />} /> */}
+                  <Route path="/myprofile" element={<MyProfile />} />
                   <Route path="/profile" element={<Profile />} />
                 </Route>
               </Routes>
