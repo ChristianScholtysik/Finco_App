@@ -7,6 +7,8 @@ import { useUserContext } from "../context/UserContext";
 import ButtonExpense from "../components/ButtonExpense";
 import ButtonIncome from "../components/ButtonIncome";
 
+import { BsCreditCard2Front } from "react-icons/bs";
+
 const MyWallet = () => {
   const currentDate: string = new Date().toLocaleDateString("de-DE", {
     day: "2-digit",
@@ -19,6 +21,11 @@ const MyWallet = () => {
   const [balance, setBalance] = useState<number | null>(null);
 
   console.log(balance);
+
+  const formattedText = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "EUR",
+  }).format(Number(balance));
 
   useEffect(() => {
     const updatedBalance = userContext.account?.amount;
@@ -54,9 +61,12 @@ const MyWallet = () => {
             {" "}
             <CreditCard />
           </section>
-
+          {/* <ButtonBlue text="Add CreditCard" /> */}
+          <button className="bg-slate-200 text-tBase font-Urbanist text-normal rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center">
+            Add CreditCard <BsCreditCard2Front />
+          </button>
           <div
-            className={`w-full max-w-lg ${
+            className={`w-full max-w-lg mt-6 ${
               balance >= 0 ? "bg-custom-gradient" : "bg-another-gradient"
             } text-white rounded-lg shadow-md py-4 px-10 relative`}>
             <div className="absolute top-4 right-3 text-sm text-gray-700">
@@ -70,7 +80,7 @@ const MyWallet = () => {
                 </p>
                 <div className="flex items-center">
                   <p className="text-xl font-semibold mb-1 text-white">
-                    {balance.toFixed(2)} €
+                    {formattedText}
                   </p>
                 </div>
               </div>
@@ -83,7 +93,9 @@ const MyWallet = () => {
           </section>
         </section>
       </div>
-      <Navbar />
+      <div className="flex justify-center">
+        <Navbar />
+      </div>
     </section>
   );
 };

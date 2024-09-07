@@ -59,6 +59,7 @@ interface MonthlyData {
 const Report: React.FC = () => {
   const userContext = useUserContext();
   const [loading, setLoading] = useState(true);
+  console.log(loading);
 
   // Jahresspends pro Monat Diagramm und Fetch
 
@@ -413,8 +414,7 @@ const Report: React.FC = () => {
           {/* Button zum Anzeigen/Verbergen der monatlichen Analyse */}
           <button
             className="h-10 text-center font-normal text-stone-500 bg-gray px-4 py-2 rounded-lg w-full"
-            onClick={() => setIsYearlyOpen(!isYearlyOpen)}
-          >
+            onClick={() => setIsYearlyOpen(!isYearlyOpen)}>
             {isYearlyOpen ? "" : "Show"} Spending Analysis per Month
           </button>
           {/* Chart Yearly Analysis */}
@@ -430,8 +430,7 @@ const Report: React.FC = () => {
           {/* Button zum Anzeigen/Verbergen der Kategorieanalyse */}
           <button
             className="h-10 text-center px-4 py-2 rounded-lg w-full text-stone-500 bg-gray"
-            onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-          >
+            onClick={() => setIsCategoryOpen(!isCategoryOpen)}>
             {isCategoryOpen ? "" : "Show"} Category Spending Analysis
           </button>
 
@@ -449,8 +448,7 @@ const Report: React.FC = () => {
                     onClick={() =>
                       setOpenCategoryCalendar(!openCategoryCalendar)
                     }
-                    className="px-4 py-2 border border-gray-300 text-xs rounded-lg shadow-sm mb-4 bg-gray-200 text-inactive"
-                  >
+                    className="px-4 py-2 border border-gray-300 text-xs rounded-lg shadow-sm mb-4 bg-gray-200 text-inactive">
                     {selectionCategoryRange.startDate.toDateString()} -{" "}
                     {selectionCategoryRange.endDate.toDateString()}
                   </button>
@@ -497,8 +495,7 @@ const Report: React.FC = () => {
                                 data.incomeExpenses[index] === "income"
                                   ? "text-income"
                                   : "text-expenses"
-                              }`}
-                            >
+                              }`}>
                               {new Intl.NumberFormat("en-GB", {
                                 style: "currency",
                                 currency: "EUR",

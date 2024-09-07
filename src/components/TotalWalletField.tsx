@@ -17,6 +17,11 @@ const TotalWalletField: React.FC<TotalWalletFieldProps> = ({ onToggle }) => {
 
   console.log(balance);
 
+  const formattedText = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "EUR",
+  }).format(Number(balance));
+
   useEffect(() => {
     const updatedBalance = userContext.account?.amount;
     setBalance(updatedBalance ?? 0);
@@ -42,7 +47,7 @@ const TotalWalletField: React.FC<TotalWalletFieldProps> = ({ onToggle }) => {
           </p>
           <div className="flex items-center">
             <p className="text-xl font-semibold mb-1 text-white">
-              {balance.toFixed(2)} €
+              {formattedText}
             </p>
           </div>
         </div>

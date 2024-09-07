@@ -1,5 +1,3 @@
-
-
 import ExpenseField from "../components/ExpenseField";
 import IncomeField from "../components/IncomeField";
 import Navbar from "../components/Navbar";
@@ -12,23 +10,18 @@ import supabaseClient from "../lib/supabaseClient";
 import { useUserContext } from "../context/UserContext";
 import { useTransactionContext } from "../context/TotalIncomeContext";
 
-
-
 const Transaction = () => {
   const userContext = useUserContext();
 
-  const incomeExpenses=useTransactionContext() 
-
+  const incomeExpenses = useTransactionContext();
 
   const [transactions, setTransactions] = useState<Transactions[]>([]);
   const [groupedTransactions, setGroupedTransactions] = useState<{
     [date: string]: Transactions[];
   }>({});
 
-
   const [income, setIncome] = useState<Transactions[]>([]);
   const [expenses, setExpenses] = useState<Transactions[]>([]);
-
 
   useEffect(() => {
     const fetchAllTransactions = async () => {
@@ -46,36 +39,26 @@ const Transaction = () => {
     fetchAllTransactions();
   }, []);
 
-
-
-
-  
   useEffect(() => {
     if (transactions.length > 0) {
-      const grouped = transactions.reduce(
-        (acc, transaction) => {
-          const date = new Date(
-            transaction.transaction_date
-          ).toLocaleDateString("en-CA");
+      const grouped = transactions.reduce((acc, transaction) => {
+        const date = new Date(transaction.transaction_date).toLocaleDateString(
+          "en-CA"
+        );
 
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-          acc[date].push(transaction);
-          return acc;
-        },
-        {} as { [date: string]: Transactions[] }
-      );
+        if (!acc[date]) {
+          acc[date] = [];
+        }
+        acc[date].push(transaction);
+        return acc;
+      }, {} as { [date: string]: Transactions[] });
 
       const sortedGrouped = Object.keys(grouped)
         .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
-        .reduce(
-          (acc, date) => {
-            acc[date] = grouped[date];
-            return acc;
-          },
-          {} as { [date: string]: Transactions[] }
-        );
+        .reduce((acc, date) => {
+          acc[date] = grouped[date];
+          return acc;
+        }, {} as { [date: string]: Transactions[] });
 
       setGroupedTransactions(sortedGrouped);
     }
@@ -135,7 +118,15 @@ const Transaction = () => {
 
   const expenseFieldText = incomeExpenses.totalExpenses?.toFixed(2) ?? "0.00";
 
-  console.log(incomeFieldText);
+  const formattedIncomeFieldText = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "EUR",
+  }).format(Number(incomeFieldText));
+
+  const formattedExpenseFieldText = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "EUR",
+  }).format(Number(expenseFieldText));
 
   return (
     <div className="flex items-center justify-center">
@@ -159,10 +150,9 @@ const Transaction = () => {
           <SearchIcon />
         </div>
         <div className="flex w-full gap-4 mb-10">
-          <IncomeField text={incomeFieldText} />
-          <ExpenseField text={expenseFieldText} />
+          <IncomeField text={formattedIncomeFieldText} />
+          <ExpenseField text={formattedExpenseFieldText} />
         </div>
-
 
         {Object.keys(groupedTransactions).map((date) => (
           <div key={date}>

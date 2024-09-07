@@ -1,4 +1,3 @@
-// src/pages/CategoryPage.tsx
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -21,16 +20,22 @@ const CategoryPage: React.FC = () => {
 
   useEffect(() => {
     const fetchCategoryTransactions = async () => {
-      const { data, error } = await supabaseClient
-        .from("transactions")
-        .select("*")
-        .eq("category", category);
+      if (category) {
+        // Check if category is defined
+        const { data, error } = await supabaseClient
+          .from("transactions")
+          .select("*")
+          .eq("category", category);
 
-      if (error) {
-        console.error(error);
-        setTransactions([]);
+        if (error) {
+          console.error(error);
+          setTransactions([]);
+        } else {
+          setTransactions(data);
+        }
       } else {
-        setTransactions(data);
+        console.error("Category is undefined");
+        setTransactions([]);
       }
     };
 
