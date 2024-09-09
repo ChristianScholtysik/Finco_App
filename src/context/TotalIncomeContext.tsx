@@ -79,6 +79,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
 import { Transactions } from "../types/supabase-types.own";
+import { useUserContext } from "./UserContext";
 
 interface ITransactionContext {
   totalIncome: number | null;
@@ -99,13 +100,16 @@ export const TransactionProvider = ({
   const [totalIncome, setTotalIncome] = useState<number | null>(null);
   const [transactions, setTransactions] = useState<Transactions[]>([]);
   const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
+  const userContext = useUserContext();
+  const accountId = userContext?.account?.id || "";
 
   useEffect(() => {
     const fetchIncomeTransactions = async () => {
       const { data, error } = await supabaseClient
         .from("transactions")
         .select("*")
-        .eq("income_expenses", "income");
+        .eq("income_expenses", "income")
+        .eq("account_id", accountId);
 
       if (error) {
         console.error("Error fetching income transactions:", error);
@@ -129,7 +133,8 @@ export const TransactionProvider = ({
       const { data, error } = await supabaseClient
         .from("transactions")
         .select("*")
-        .eq("income_expenses", "expense");
+        .eq("income_expenses", "expense")
+        .eq("account_id", accountId);
 
       if (error) {
         console.error("Error fetching expenses transactions:", error);
