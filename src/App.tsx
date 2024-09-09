@@ -8,25 +8,18 @@ import SearchResultPage from "./pages/SearchResultPage";
 import Income from "./pages/Income";
 import Expenses from "./pages/Expenses";
 import Report from "./pages/Report";
-
 import { UserProvider } from "./context/UserContext";
 import PrivateRoute from "./lib/PrivateRoute";
-
 import Profile from "./pages/Profile";
 import CategoryPage from "./pages/CategoryPage";
-
 import { TransactionProvider } from "./context/TotalIncomeContext";
-
 import MyWallet from "./pages/MyWallet";
-// import { AccountContext } from "./context/AccountContext";
-// const [account, setAccount] = useState<IAccount | null>(null);
+import AddAccount from "./pages/AddAccount";
 
 function App() {
   return (
     <UserProvider>
       <TransactionProvider>
-        {/* <ProfileProvider> */}
-        {/* <AccountContext.Provider value={{ account, setAccount }}> */}
         <BrowserRouter>
           <div>
             <main>
@@ -49,13 +42,12 @@ function App() {
                   />
                   <Route path="/mywallet" element={<MyWallet />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/addaccount" element={<AddAccount />} />
                 </Route>
               </Routes>
             </main>
           </div>
         </BrowserRouter>
-        {/* </AccountContext.Provider> */}
-        {/* </ProfileProvider> */}
       </TransactionProvider>
     </UserProvider>
   );

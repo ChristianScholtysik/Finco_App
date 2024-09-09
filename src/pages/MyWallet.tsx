@@ -7,6 +7,7 @@ import { useUserContext } from "../context/UserContext";
 
 import { BsCreditCard2Front } from "react-icons/bs";
 import { RiBankLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const MyWallet = () => {
   const currentDate: string = new Date().toLocaleDateString("de-DE", {
@@ -61,9 +62,11 @@ const MyWallet = () => {
           <button className="bg-slate-200 text-tBase font-Urbanist text-small rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center mb-6">
             Add Credit Card <BsCreditCard2Front />
           </button>
-          <button className="bg-slate-200 text-tBase font-Urbanist text-small rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center">
-            Add Bank Account <RiBankLine />
-          </button>
+          <Link to="/addaccount">
+            <button className="bg-slate-200 text-tBase font-Urbanist text-small rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center">
+              Add Bank Account <RiBankLine />
+            </button>
+          </Link>
           <div
             className={`w-full max-w-lg mt-6 ${
               balance >= 0 ? "bg-custom-gradient" : "bg-another-gradient"
