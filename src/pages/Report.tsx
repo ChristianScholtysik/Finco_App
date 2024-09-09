@@ -479,7 +479,7 @@ const Report: React.FC = () => {
                   <a href={`/category/${category}`} className="cursor-pointer">
                     <div className="flex flex-col mb-8 w-full px-2 py-4">
                       <div className="flex justify-between w-full">
-                        <div className="text-md rounded-full mr-4 p-2 bg-gray w-12 h-12 flex items-center justify-center">
+                        <div className="text-md rounded-full mr-4 px-4 bg-gray w-12 h-12 flex items-center justify-center">
                           {categoryIcons[category] || "🛒"}
                         </div>
                         <div>

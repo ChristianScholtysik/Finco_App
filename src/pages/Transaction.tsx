@@ -167,7 +167,7 @@ const Transaction = () => {
                 <div
                   className="flex justify-between gap-4 items-center mb-4 "
                   key={transaction.id}>
-                  <div className="text-lg rounded-full p-2 bg-gray w-12 h-12 flex items-center justify-center">
+                  <div className="text-lg rounded-full px-4 bg-gray w-12 h-12 flex items-center justify-center">
                     {categoryIcons[transaction.category] || "🛒"}
                   </div>
                   <div>
