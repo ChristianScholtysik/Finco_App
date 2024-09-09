@@ -4,10 +4,9 @@ import Logo from "../components/Logo";
 import Navbar from "../components/Navbar";
 
 import { useUserContext } from "../context/UserContext";
-import ButtonExpense from "../components/ButtonExpense";
-import ButtonIncome from "../components/ButtonIncome";
 
 import { BsCreditCard2Front } from "react-icons/bs";
+import { RiBankLine } from "react-icons/ri";
 
 const MyWallet = () => {
   const currentDate: string = new Date().toLocaleDateString("de-DE", {
@@ -62,8 +61,11 @@ const MyWallet = () => {
             <CreditCard />
           </section>
           {/* <ButtonBlue text="Add CreditCard" /> */}
-          <button className="bg-slate-200 text-tBase font-Urbanist text-normal rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center">
-            Add CreditCard <BsCreditCard2Front />
+          <button className="bg-slate-200 text-tBase font-Urbanist text-small rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center mb-6">
+            Add Credit Card <BsCreditCard2Front />
+          </button>
+          <button className="bg-slate-200 text-tBase font-Urbanist text-small rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center">
+            Add Bank Account <RiBankLine />
           </button>
           <div
             className={`w-full max-w-lg mt-6 ${
@@ -86,11 +88,7 @@ const MyWallet = () => {
               </div>
             </div>
           </div>
-          <section className="flex gap-4 mb-10 mt-6">
-            {" "}
-            <ButtonIncome />
-            <ButtonExpense />
-          </section>
+          <section className="flex gap-4 mb-10 mt-6"></section>
         </section>
       </div>
       <div className="flex justify-center">
