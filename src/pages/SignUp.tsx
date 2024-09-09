@@ -17,6 +17,49 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
+  // const handleSignUp = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setErrorMessage(null);
+  //   setSuccessMessage(null);
+
+  //   if (!termsAccepted) {
+  //     setErrorMessage("You must agree to the terms and service.");
+  //     return;
+  //   }
+
+  //   if (password !== confirmPassword) {
+  //     setErrorMessage("Passwords do not match.");
+  //     return;
+  //   }
+
+  //   const authResponse = await supabaseClient.auth.signUp({
+  //     email,
+  //     password,
+  //     options: {
+  //       data: {
+  //         first_name: firstName,
+  //         last_name: lastName,
+  //         cardnumber: cardNumber,
+  //       },
+  //     },
+  //   });
+
+  //   if (authResponse.error) {
+  //     console.error("Sign-up error", authResponse.error.message);
+  //     setErrorMessage(authResponse.error.message);
+  //     return;
+  //   }
+
+  //   if (authResponse.data.user) {
+  //     console.log("User registration successful", authResponse.data.user);
+  //     setSuccessMessage(
+  //       "Sign-up successful. Please check your email to confirm your account."
+  //     );
+
+  //     setTimeout(() => navigate("/login"), 2000);
+  //   }
+  // };
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
@@ -35,13 +78,6 @@ const SignUp = () => {
     const authResponse = await supabaseClient.auth.signUp({
       email,
       password,
-      options: {
-        data: {
-          first_name: firstName,
-          last_name: lastName,
-          cardnumber: cardNumber,
-        },
-      },
     });
 
     if (authResponse.error) {
@@ -51,7 +87,25 @@ const SignUp = () => {
     }
 
     if (authResponse.data.user) {
-      console.log("User registration successful", authResponse.data.user);
+      const user = authResponse.data.user;
+
+      const { error } = await supabaseClient.from("profiles").insert([
+        {
+          id: user.id,
+          first_name: firstName,
+          last_name: lastName,
+          card_number: Number(cardNumber),
+        },
+      ]);
+
+      if (error) {
+        console.error("Error inserting into profiles", error.message);
+        setErrorMessage(
+          "There was an issue setting up your profile. Please try again."
+        );
+        return;
+      }
+
       setSuccessMessage(
         "Sign-up successful. Please check your email to confirm your account."
       );
