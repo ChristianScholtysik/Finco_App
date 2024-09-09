@@ -15,11 +15,8 @@ const MyWallet = () => {
     year: "numeric",
   });
   const userContext = useUserContext();
-  //   const user = userContext?.user;
 
   const [balance, setBalance] = useState<number | null>(null);
-
-  console.log(balance);
 
   const formattedText = new Intl.NumberFormat("en-GB", {
     style: "currency",
