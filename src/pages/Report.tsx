@@ -491,11 +491,15 @@ const Report: React.FC = () => {
                           <div className="w-full">
                             {/* Anzeige des Werts und Prozentsatzes für jede Kategorie */}
                             <p
-                              className={`text-small text-tBase ${
+                              className={`text-small ${
                                 data.incomeExpenses[index] === "income"
                                   ? "text-income"
                                   : "text-expenses"
                               }`}>
+                              {data.incomeExpenses[index] === "expense" &&
+                              data.values[index] > 0
+                                ? "- "
+                                : ""}
                               {new Intl.NumberFormat("en-GB", {
                                 style: "currency",
                                 currency: "EUR",

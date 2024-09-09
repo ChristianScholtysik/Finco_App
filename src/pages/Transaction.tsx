@@ -189,9 +189,13 @@ const Transaction = () => {
                     }`}>
                     {transaction.income_expenses === "expense" &&
                     transaction.amount > 0
-                      ? "-"
+                      ? "- "
                       : ""}
-                    {Math.abs(transaction.amount).toFixed(2)} €
+                    {new Intl.NumberFormat("en-GB", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(Number(transaction.amount))}
+                    {/* {Math.abs(transaction.amount).toFixed(2)} € */}
                   </div>
                 </div>
               ))}
