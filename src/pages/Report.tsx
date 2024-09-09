@@ -1,3 +1,28 @@
+// import { useState, useEffect } from "react";
+// import { Collapse } from "react-collapse";
+// import { Bar, Chart } from "react-chartjs-2";
+// import {
+//   Chart as ChartJS,
+//   Title,
+//   Tooltip,
+//   ArcElement,
+//   LineElement,
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   BarElement,
+//   Legend,
+//   ChartOptions,
+// } from "chart.js";
+// import ChartDataLabels from "chartjs-plugin-datalabels";
+// import supabaseClient from "../lib/supabaseClient";
+// import categoryIcons from "../assets/categoryIcons";
+// import { DateRange } from "react-date-range";
+// import "react-date-range/dist/styles.css";
+// import "react-date-range/dist/theme/default.css";
+// import Navbar from "../components/Navbar";
+// import Logo from "../components/Logo";
+
 import { useState, useEffect } from "react";
 import { Collapse } from "react-collapse";
 import { Bar, Chart } from "react-chartjs-2";
@@ -12,6 +37,7 @@ import {
   PointElement,
   BarElement,
   Legend,
+  DoughnutController, // Import the DoughnutController
   ChartOptions,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
@@ -23,6 +49,20 @@ import "react-date-range/dist/theme/default.css";
 import Navbar from "../components/Navbar";
 import Logo from "../components/Logo";
 import { useUserContext } from "../context/UserContext";
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  ArcElement,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  ChartDataLabels,
+  BarElement,
+  Legend,
+  DoughnutController
+);
 
 ChartJS.register(
   Title,
