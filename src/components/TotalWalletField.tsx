@@ -71,7 +71,7 @@ import { MdExpandMore } from "react-icons/md";
 import { useUserContext } from "../context/UserContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaArrowAltCircleUp, FaRegArrowAltCircleUp } from "react-icons/fa";
+import { FaRegArrowAltCircleUp } from "react-icons/fa";
 
 interface TotalWalletFieldProps {
   onToggle: () => void;

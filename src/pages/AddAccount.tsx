@@ -3,7 +3,6 @@ import { useUserContext } from "../context/UserContext";
 import supabaseClient from "../lib/supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import ButtonBlue from "../components/ButtonBlue";
-import Logo from "../components/Logo";
 
 const AddAccount = () => {
   const navigate = useNavigate();
@@ -53,7 +52,6 @@ const AddAccount = () => {
         <form
           onSubmit={handleAddAccount}
           className="w-full max-w-sm bg-white p-8 rounded-lg">
-          {/* <Logo /> */}
           <div className="mb-6 mt-6">
             <Link to="/">
               <button
