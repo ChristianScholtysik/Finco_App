@@ -69,7 +69,7 @@ const SignUp = () => {
       <div className="flex justify-center items-center bg-gray-100">
         <form
           onSubmit={handleSignUp}
-          className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md">
+          className="w-full max-w-sm bg-white p-8 rounded-lg">
           <Logo />
           <h2 className="text-3xl font-semibold text-center mb-2 text-tBase">
             Create an account
