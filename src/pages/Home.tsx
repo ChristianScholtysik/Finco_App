@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useUserContext } from "../context/UserContext";
 import CreditCard from "../components/CreditCard";
@@ -68,11 +68,13 @@ const Home: React.FC = () => {
           </div>
 
           {userContext.profile?.avatar_url ? (
-            <img
-              alt="User Avatar"
-              src={userContext.profile.avatar_url}
-              className="inline-block h-14 w-14 rounded-full cursor-pointer object-cover object-center"
-            />
+            <Link to="profile">
+              <img
+                alt="User Avatar"
+                src={userContext.profile.avatar_url}
+                className="inline-block h-14 w-14 rounded-full cursor-pointer object-cover object-center"
+              />
+            </Link>
           ) : (
             <div className="inline-block h-14 w-14 rounded-full bg-gray-300 flex items-center justify-center">
               No image
@@ -90,8 +92,7 @@ const Home: React.FC = () => {
             showDetails
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
-          } flex gap-2 mt-6 mb-12`}
-        >
+          } flex gap-2 mt-6 mb-12`}>
           <IncomeFieldXL text={incomeFieldText} />
           <ExpenseFieldXL text={expenseFieldText} />
         </div>

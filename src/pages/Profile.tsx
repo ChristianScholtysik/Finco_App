@@ -125,11 +125,13 @@ const Profile = () => {
         <div className="flex justify-between items-center mb-10 w-full">
           <Logo />
           {avatarUrl ? (
-            <img
-              alt="User Avatar"
-              src={avatarUrl}
-              className="inline-block h-14 w-14 rounded-full cursor-pointer object-cover object-center"
-            />
+            <Link to="profile">
+              <img
+                alt="User Avatar"
+                src={avatarUrl}
+                className="inline-block h-14 w-14 rounded-full cursor-pointer object-cover object-center"
+              />
+            </Link>
           ) : (
             <div className="inline-block h-14 w-14 rounded-full bg-gray-300 flex items-center justify-center">
               No image

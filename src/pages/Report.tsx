@@ -49,6 +49,7 @@ import "react-date-range/dist/theme/default.css";
 import Navbar from "../components/Navbar";
 import Logo from "../components/Logo";
 import { useUserContext } from "../context/UserContext";
+import { Link } from "react-router-dom";
 
 ChartJS.register(
   Title,
@@ -433,11 +434,13 @@ const Report: React.FC = () => {
         <div className="flex justify-between items-center mb-10 w-full h-10">
           <Logo />
           {userContext.profile?.avatar_url ? (
-            <img
-              alt="User Avatar"
-              src={userContext.profile.avatar_url}
-              className="inline-block h-14 w-14 rounded-full cursor-pointer object-cover object-center"
-            />
+            <Link to="profile">
+              <img
+                alt="User Avatar"
+                src={userContext.profile.avatar_url}
+                className="inline-block h-14 w-14 rounded-full cursor-pointer object-cover object-center"
+              />
+            </Link>
           ) : (
             <div className="h-full w-auto aspect-square rounded-full bg-gray-300 flex items-center justify-center">
               No image

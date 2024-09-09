@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Logo from "../components/Logo";
 import supabaseClient from "../lib/supabaseClient";
@@ -74,11 +74,13 @@ const CategoryPage: React.FC = () => {
           <div className="flex justify-between items-center mb-10 w-full">
             <Logo />
             {userContext?.profile?.avatar_url ? (
-              <img
-                alt="User Avatar"
-                src={userContext?.profile?.avatar_url}
-                className="inline-block h-14 w-14 rounded-full  cursor-pointer object-cover object-center"
-              />
+              <Link to="profile">
+                <img
+                  alt="User Avatar"
+                  src={userContext?.profile?.avatar_url}
+                  className="inline-block h-14 w-14 rounded-full  cursor-pointer object-cover object-center"
+                />
+              </Link>
             ) : (
               <div className="inline-block h-14 w-14 rounded-full bg-gray-300 flex items-center justify-center">
                 No image
