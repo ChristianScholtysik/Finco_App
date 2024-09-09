@@ -35,12 +35,13 @@ const TotalWalletField: React.FC<TotalWalletFieldProps> = ({ onToggle }) => {
     <section
       className={`w-full max-w-lg ${
         balance >= 0 ? "bg-custom-gradient" : "bg-another-gradient"
-      } text-white rounded-lg shadow-md py-4 px-10 relative`}>
+      } text-white rounded-lg shadow-md py-4 px-10 relative`}
+    >
       <div className="absolute top-4 right-3 text-sm text-gray-700">
         {currentDate}
       </div>
 
-      <div className="flex justify-between items-center mb-4 px-4">
+      <div className="flex justify-between items-center mb-4 px-1">
         <div className="flex flex-col">
           <p className="text-2xl mt-4 font-semibold mb-2 text-gray-900">
             Balance
@@ -55,7 +56,8 @@ const TotalWalletField: React.FC<TotalWalletFieldProps> = ({ onToggle }) => {
 
       <div
         onClick={onToggle}
-        className="flex items-center cursor-pointer absolute bottom-1 right-2">
+        className="flex items-center cursor-pointer absolute bottom-1 right-2"
+      >
         <MdExpandMore className="text-xl mr-1" />
         <span>Details</span>
       </div>
