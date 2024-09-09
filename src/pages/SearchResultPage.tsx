@@ -5,11 +5,13 @@ import { Transactions } from "../types/supabase-types.own";
 import Logo from "../components/Logo";
 import categoryIcons from "../assets/categoryIcons";
 import { useUserContext } from "../context/UserContext";
+import { IoIosArrowForward } from "react-icons/io";
 
 const SearchResultPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [categoryFilter, setCategoryFilter] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Transactions[]>([]);
+  const [searchInitiated, setSearchInitiated] = useState<boolean>(false); //
   const userContext = useUserContext();
 
   useEffect(() => {
@@ -44,8 +46,11 @@ const SearchResultPage: React.FC = () => {
   const fetchSearchResults = async (term: string) => {
     if (!term) {
       setSearchResults([]);
+      setSearchInitiated(false);
       return;
     }
+
+    setSearchInitiated(true);
 
     const { data, error } = await supabaseClient
       .from("transactions")
@@ -63,8 +68,11 @@ const SearchResultPage: React.FC = () => {
   const fetchCategoryResults = async (category: string) => {
     if (!category) {
       setSearchResults([]);
+      setSearchInitiated(false);
       return;
     }
+
+    setSearchInitiated(true);
 
     const { data, error } = await supabaseClient
       .from("transactions")
@@ -108,21 +116,22 @@ const SearchResultPage: React.FC = () => {
             </div>
           )}
         </div>
-        <div className="mb-5">
+
+        <div className="mb-4">
           <input
             type="text"
             placeholder="Search Transactions..."
-            className="w-full p-2 border border-gray-200 rounded-md focus:outline-none focus:border-gray-300"
+            className="w-full px-6 py-4 border-0 rounded-full text-tBase bg-gray"
             value={searchTerm}
             onChange={handleSearchInputChange}
           />
         </div>
 
-        <div className="mb-5 custom-select">
+        <div className="mb-10 custom-select relative">
           <select
             value={categoryFilter}
             onChange={handleCategoryChange}
-            className="w-full px-4 py-2 border border-gray rounded-md bg-lightgray mb-6 mt-4"
+            className="w-full px-6 py-4 pr-10 border-0 rounded-full text-tBase bg-gray appearance-none"
           >
             <option value="">Select Category</option>
             <option value="Food & Drink">Food & Drink</option>
@@ -145,44 +154,47 @@ const SearchResultPage: React.FC = () => {
             <option value="Dining Out & Takeaway">Dining Out & Takeaway</option>
             <option value="Other">Other</option>
           </select>
+          <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+            <IoIosArrowForward className="text-gray-400" />
+          </div>
         </div>
 
         <div>
-          {searchResults.length > 0 ? (
-            searchResults.map((transaction) => (
-              <div
-                className="flex justify-between gap-4 items-start mb-4 border-b border-gray-200 pb-6"
-                key={transaction.id}
-              >
-                <div className="text-lg rounded-full p-2 bg-gray w-12 h-12 flex items-center justify-center">
-                  {categoryIcons[transaction.category] || "🛒"}
-                </div>
-                <div className="flex-1">
-                  <div className="font-semibold text-tBase text-left">
-                    {transaction.name}
-                  </div>
-                  <div className="text-small text-tBase text-left">
-                    {new Date(
-                      transaction.transaction_date
-                    ).toLocaleDateString()}
-                  </div>
-                </div>
-
+          {searchResults.length > 0
+            ? searchResults.map((transaction) => (
                 <div
-                  className={`font-bold ${
-                    transaction.income_expenses === "income"
-                      ? "text-[#1e78fe]"
-                      : "text-[#FF9900]"
-                  }`}
+                  className="flex justify-between gap-6 items-start mb-6  pb-8 "
+                  key={transaction.id}
                 >
-                  {transaction.income_expenses === "expense" ? "-" : "+"}
-                  {Math.abs(transaction.amount).toFixed(2)} €
+                  <div className="text-lg rounded-full p-2 bg-gray w-12 h-12 flex items-center justify-center">
+                    {categoryIcons[transaction.category] || "🛒"}
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-tBase text-left">
+                      {transaction.name}
+                    </div>
+                    <div className="text-small text-tBase text-left">
+                      {new Date(
+                        transaction.transaction_date
+                      ).toLocaleDateString()}
+                    </div>
+                  </div>
+
+                  <div
+                    className={`font-bold ${
+                      transaction.income_expenses === "income"
+                        ? "text-[#1e78fe]"
+                        : "text-[#FF9900]"
+                    }`}
+                  >
+                    {transaction.income_expenses === "expense" ? "-" : "+"}
+                    {Math.abs(transaction.amount).toFixed(2)} €
+                  </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p>No transactions found.</p>
-          )}
+              ))
+            : searchInitiated && (
+                <p className="ml-3 mt-10">No transactions found.</p>
+              )}
         </div>
       </section>
       <Navbar />
