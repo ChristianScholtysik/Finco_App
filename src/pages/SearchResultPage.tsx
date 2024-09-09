@@ -101,7 +101,7 @@ const SearchResultPage: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <section className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
+      <section className="bg-white p-6 rounded-lg  w-full max-w-sm">
         <div className="flex justify-between items-center mb-10 w-full">
           <Logo />
           {userContext?.profile?.avatar_url ? (
@@ -131,8 +131,7 @@ const SearchResultPage: React.FC = () => {
           <select
             value={categoryFilter}
             onChange={handleCategoryChange}
-            className="w-full px-6 py-4 pr-10 border-0 rounded-full text-tBase bg-gray appearance-none"
-          >
+            className="w-full px-6 py-4 pr-10 border-0 rounded-full text-tBase bg-gray appearance-none">
             <option value="">Select Category</option>
             <option value="Food & Drink">Food & Drink</option>
             <option value="Salary">Salary</option>
@@ -164,8 +163,7 @@ const SearchResultPage: React.FC = () => {
             ? searchResults.map((transaction) => (
                 <div
                   className="flex justify-between gap-6 items-start mb-6  pb-8 "
-                  key={transaction.id}
-                >
+                  key={transaction.id}>
                   <div className="text-lg rounded-full p-2 bg-gray w-12 h-12 flex items-center justify-center">
                     {categoryIcons[transaction.category] || "🛒"}
                   </div>
@@ -185,10 +183,13 @@ const SearchResultPage: React.FC = () => {
                       transaction.income_expenses === "income"
                         ? "text-[#1e78fe]"
                         : "text-[#FF9900]"
-                    }`}
-                  >
-                    {transaction.income_expenses === "expense" ? "-" : "+"}
-                    {Math.abs(transaction.amount).toFixed(2)} €
+                    }`}>
+                    {transaction.income_expenses === "expense" ? "-" : ""}
+                    {new Intl.NumberFormat("en-GB", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(Number(transaction.amount))}
+                    {/* {Math.abs(transaction.amount).toFixed(2)} € */}
                   </div>
                 </div>
               ))

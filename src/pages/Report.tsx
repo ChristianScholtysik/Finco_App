@@ -413,7 +413,7 @@ const Report: React.FC = () => {
         <div className="flex flex-col justify-center gap-2">
           {/* Button zum Anzeigen/Verbergen der monatlichen Analyse */}
           <button
-            className="h-10 text-center font-normal text-stone-500 bg-gray px-4 py-2 rounded-lg w-full"
+            className="h-10 text-center text-small text-tBase bg-gray px-4 py-2 rounded-lg w-full"
             onClick={() => setIsYearlyOpen(!isYearlyOpen)}>
             {isYearlyOpen ? "" : "Show"} Spending Analysis per Month
           </button>
@@ -429,7 +429,7 @@ const Report: React.FC = () => {
 
           {/* Button zum Anzeigen/Verbergen der Kategorieanalyse */}
           <button
-            className="h-10 text-center px-4 py-2 rounded-lg w-full text-stone-500 bg-gray"
+            className="h-10 text-center px-4 py-2 rounded-lg w-full text-tBase bg-gray text-small"
             onClick={() => setIsCategoryOpen(!isCategoryOpen)}>
             {isCategoryOpen ? "" : "Show"} Category Spending Analysis
           </button>

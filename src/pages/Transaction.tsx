@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
 import { useUserContext } from "../context/UserContext";
 import { useTransactionContext } from "../context/TotalIncomeContext";
+import { Link } from "react-router-dom";
 
 const Transaction = () => {
   const userContext = useUserContext();
@@ -147,7 +148,9 @@ const Transaction = () => {
         </div>
         <div className="flex justify-between items-center gap-16 mb-8 w-full max-w-sm">
           <h1 className="font-bold text-2xl">All Transactions</h1>
-          <SearchIcon />
+          <Link to="/search-result">
+            <SearchIcon />
+          </Link>
         </div>
         <div className="flex w-full gap-4 mb-10">
           <IncomeField text={formattedIncomeFieldText} />
