@@ -115,7 +115,7 @@ const SignUp = () => {
             <input
               type="text"
               id="firstname"
-              value={cardNumber}
+              value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               required
               className="w-full px-6 py-4 border border-border rounded-full text-tBase"
@@ -126,7 +126,7 @@ const SignUp = () => {
             <input
               type="text"
               id="lastname"
-              value={cardNumber}
+              value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               required
               className="w-full px-6 py-4 border border-border rounded-full text-tBase"
