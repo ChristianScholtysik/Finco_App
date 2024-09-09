@@ -68,7 +68,7 @@ const LoginForm = () => {
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
         onSubmit={handleLogin}
-        className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md ">
+        className="w-full max-w-sm bg-white p-8 rounded-lg  ">
         <Logo />
         <h2 className="text-3xl font-semibold text-center mb-4 text-tBase">
           Welcome back
