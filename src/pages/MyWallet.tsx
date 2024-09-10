@@ -10,11 +10,11 @@ import { RiBankLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 const MyWallet = () => {
-  const currentDate: string = new Date().toLocaleDateString("de-DE", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  // const currentDate: string = new Date().toLocaleDateString("de-DE", {
+  //   day: "2-digit",
+  //   month: "2-digit",
+  //   year: "numeric",
+  // });
   const userContext = useUserContext();
 
   const [balance, setBalance] = useState<number | null>(null);
@@ -69,7 +69,7 @@ const MyWallet = () => {
                   <span>Hey </span>
                   <span
                     style={{
-                      color: balance >= 0 ? "#ffaa1a" : "#298bff", // Adjust colors based on your gradient themes
+                      color: balance >= 0 ? "#ffaa1a" : "#298bff",
                     }}>
                     {userContext.profile?.first_name}
                   </span>
