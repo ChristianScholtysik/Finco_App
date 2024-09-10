@@ -16,6 +16,7 @@ const CategoryPage: React.FC = () => {
   }>({});
 
   const userContext = useUserContext();
+  const accountId = userContext?.account?.id || "";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const CategoryPage: React.FC = () => {
         const { data, error } = await supabaseClient
           .from("transactions")
           .select("*")
+          .eq("account_id", accountId)
           .eq("category", category);
 
         if (error) {

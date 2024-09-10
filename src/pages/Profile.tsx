@@ -139,7 +139,7 @@ const Profile = () => {
           )}
         </div>
         <h2 className="text-3xl font-semibold text-center mb-4 text-tBase">
-          My Profile
+          {userContext.profile?.first_name}`s Profile
         </h2>
         <p className="text-center mb-12 mt-4 font-normal text-sm text-tBase p-2">
           "Welcome to your profile, where you can manage your account and

@@ -56,40 +56,43 @@ const MyWallet = () => {
           <div className="flex justify-between items-center gap-16 mb-8 w-full max-w-sm">
             <h1 className="font-bold text-2xl">My Wallet</h1>
           </div>
-          <section className=" mb-10">
-            {" "}
-            <CreditCard />
-          </section>
-          {/* <ButtonBlue text="Add CreditCard" /> */}
-          <button className="bg-slate-200 text-tBase font-Urbanist text-small rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center mb-6">
-            Add Credit Card <BsCreditCard2Front />
-          </button>
-          <Link to="/addaccount">
-            <button className="bg-slate-200 text-tBase font-Urbanist text-small rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center">
-              Add Bank Account <RiBankLine />
-            </button>
-          </Link>
+
           <div
-            className={`w-full max-w-lg mt-6 ${
+            className={`w-full max-w-lg mt-6 mb-6  ${
               balance >= 0 ? "bg-custom-gradient" : "bg-another-gradient"
             } text-white rounded-lg shadow-md py-4 px-10 relative`}>
-            <div className="absolute top-4 right-3 text-sm text-gray-700">
+            {/* <div className="absolute top-4 right-3 text-sm text-gray-700">
               {currentDate}
-            </div>
+            </div> */}
 
-            <div className="flex justify-between items-center mb-4 px-4">
+            <div className="flex justify-center items-center mb-6 px-4">
               <div className="flex flex-col">
-                <p className="text-2xl mt-4 font-semibold mb-2 text-gray-900">
-                  Balance
+                <p className="text-normal mt-4 font-semibold mb-2 ">
+                  There are currently
                 </p>
-                <div className="flex items-center">
-                  <p className="text-xl font-semibold mb-1 text-white">
+                <div className="flex items-center flex-col">
+                  <p className="text-xxl font-bold mb-1 text-white">
                     {formattedText}
+                  </p>
+                  <p className="text-normal mt-4 font-semibold mb-2 ">
+                    in your wallet!
                   </p>
                 </div>
               </div>
             </div>
           </div>
+          <Link to="/addaccount">
+            <button className="bg-slate-200 text-tBase font-Urbanist text-small rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center mb-6">
+              Add Bank Account <RiBankLine />
+            </button>
+          </Link>
+          <section className=" mb-4 mt-10">
+            <CreditCard />
+          </section>
+          <button className="bg-slate-200 text-tBase font-Urbanist text-small rounded-full shadow-lg px-24 py-4 w-full flex justify-between items-center mb-6">
+            Add Credit Card <BsCreditCard2Front />
+          </button>
+
           <section className="flex gap-4 mb-10 mt-6"></section>
         </section>
       </div>
