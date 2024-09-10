@@ -45,6 +45,12 @@ const Expenses = () => {
     fetchAccountID();
   }, [user]);
 
+  useEffect(() => {
+    // Set the initial date to today's date
+    const today = new Date().toISOString().split("T")[0];
+    setDate(today);
+  }, []);
+
   const addExpense = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -97,13 +103,12 @@ const Expenses = () => {
 
       const amountResponse = await supabaseClient
         .from("account")
-
         .update(expenseToAmount)
         .eq("profile_id", profileId);
 
       if (amountResponse.error) {
         console.error("Error inserting data:", error);
-        setErrorMessage("Failed to add expense. Please try again.");
+        setErrorMessage("Failed to update account. Please try again.");
         return;
       }
 

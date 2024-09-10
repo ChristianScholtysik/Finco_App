@@ -8,9 +8,7 @@ import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 
 const Income = () => {
-  // Verbindung zum Context
   const userContext = useUserContext();
-  // hole mir hier den User
   const user = userContext?.user;
 
   if (!userContext) {
@@ -28,12 +26,11 @@ const Income = () => {
   useEffect(() => {
     const fetchAccountID = async () => {
       if (user) {
-        // Nutzer angemeldet?
         console.log("User:", user);
         const { data, error } = await supabaseClient
           .from("account")
-          .select("id") // Spalte auswählen
-          .eq("profile_id", user.id) // Zeile filtern wo profile id = user id
+          .select("id")
+          .eq("profile_id", user.id)
           .single();
 
         if (error) {
@@ -47,8 +44,15 @@ const Income = () => {
         }
       }
     };
+
     fetchAccountID();
   }, [user]);
+
+  useEffect(() => {
+    // Set the initial date to today's date
+    const today = new Date().toISOString().split("T")[0];
+    setDate(today);
+  }, []);
 
   const addIncome = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,7 +70,6 @@ const Income = () => {
     try {
       const formattedAmount = parseFloat(amount.toFixed(2));
 
-      // Objekt kreieren
       const incomeData: TablesInsert<"transactions"> = {
         name: name,
         amount: formattedAmount,
@@ -76,13 +79,10 @@ const Income = () => {
         account_id: accountId,
       };
 
-      // Insert Befehl an Supabase
-
       const { error } = await supabaseClient
         .from("transactions")
         .insert([incomeData]);
 
-      //* refetch transactions after new transaction was inserted to db
       userContext.fetchTransactions();
 
       console.log(incomeData);
@@ -108,16 +108,15 @@ const Income = () => {
 
       const amountResponse = await supabaseClient
         .from("account")
-
         .update(expenseToAmount)
         .eq("profile_id", profileId);
 
       if (amountResponse.error) {
-        console.error("Error inserting data:", error);
-        setErrorMessage("Failed to add expense. Please try again.");
+        console.error("Error updating account:", amountResponse.error);
+        setErrorMessage("Failed to update account. Please try again.");
         return;
       }
-      //*
+
       userContext.setAccount({
         id: "",
         created_at: "",
@@ -125,18 +124,14 @@ const Income = () => {
         profile_id: userContext.profile?.id ?? "",
       });
 
-      console.log("Income1:", userContext.totalIncome);
       userContext.setTotalIncome(userContext.totalIncome ?? 0 + amount);
 
-      console.log("Income2:", userContext.totalIncome);
-
-      // Danach wieder alles leeren
       setName("");
       setSuccessMessage("Income added successfully!");
       setErrorMessage("");
       setAmount(undefined);
       setCategoryFilter("");
-      setDate("");
+      setDate(""); // Reset the date if needed
     } catch (error: any) {
       console.error("Unexpected error:", error);
       setErrorMessage("Failed to add income. Please try again.");
