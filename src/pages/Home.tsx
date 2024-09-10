@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useUserContext } from "../context/UserContext";
@@ -10,14 +10,16 @@ import TotalWalletField from "../components/TotalWalletField";
 const Home: React.FC = () => {
   const userContext = useUserContext();
 
-  const incomeFieldText = userContext.totalIncome?.toFixed(2) ?? "0.00";
-  const expenseFieldText = userContext.totalExpenses?.toFixed(2) ?? "0.00";
-
   const [showDetails, setShowDetails] = useState(false);
 
   const toggleDetails = () => {
     setShowDetails(!showDetails);
   };
+
+  const totalIncome = userContext.totalIncome?.toFixed(2) ?? "0.00";
+
+  console.log(totalIncome);
+  const expenseFieldText = userContext.totalExpenses?.toFixed(2) ?? "0.00";
 
   // useEffect(() => {
   //   const fetchProfileData = async () => {
@@ -92,7 +94,7 @@ const Home: React.FC = () => {
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
           } flex gap-2 mt-6 mb-12`}>
-          <IncomeFieldXL text={incomeFieldText} />
+          <IncomeFieldXL text={totalIncome} />
           <ExpenseFieldXL text={expenseFieldText} />
         </div>
       </section>

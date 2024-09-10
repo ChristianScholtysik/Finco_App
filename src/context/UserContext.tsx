@@ -17,6 +17,7 @@ interface IUserContext {
   transactions: Transactions[];
   setTransactions: React.Dispatch<React.SetStateAction<Transactions[]>>;
   loading: boolean;
+  fetchTransactions: () => Promise<void>;
 }
 
 const UserContext = createContext<IUserContext | null>(null);
@@ -29,6 +30,55 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [totalIncome, setTotalIncome] = useState<number | null>(null);
   const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
   const [transactions, setTransactions] = useState<Transactions[]>([]);
+
+  //* Fetch transactions for income and expenses
+  const fetchTransactions = async () => {
+    if (!account?.id) return;
+
+    console.log("Account ID", account.id);
+
+    //* Fetch income transactions
+    const { data: incomeData, error: incomeError } = await supabaseClient
+      .from("transactions")
+      .select("*")
+      .eq("income_expenses", "income")
+      .eq("account_id", account.id);
+
+    if (incomeError) {
+      console.error("Error fetching income transactions:", incomeError);
+      setTotalIncome(0);
+    } else if (incomeData) {
+      setTransactions((prev) => [...prev, ...incomeData]);
+
+      const incomeTotal = incomeData.reduce(
+        (sum, transaction) => sum + (transaction.amount || 0),
+        0
+      );
+      setTotalIncome(incomeTotal);
+    }
+
+    //* Fetch expense transactions
+    const { data: expenseData, error: expenseError } = await supabaseClient
+      .from("transactions")
+      .select("*")
+      .eq("income_expenses", "expense")
+      .eq("account_id", account.id);
+
+    if (expenseError) {
+      console.error("Error fetching expense transactions:", expenseError);
+      setTotalExpenses(0);
+    } else if (expenseData) {
+      setTransactions((prev) => [...prev, ...expenseData]);
+
+      const expenseTotal = expenseData.reduce(
+        (sum, transaction) => sum + (transaction.amount || 0),
+        0
+      );
+      setTotalExpenses(expenseTotal);
+    }
+
+    setLoading(false);
+  };
 
   useEffect(() => {
     const fetchSessionAndProfile = async () => {
@@ -74,60 +124,15 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       setAccount(accountData);
-
-      //* Fetch transactions for income and expenses
-      const fetchTransactions = async () => {
-        if (!accountData.id) return;
-
-        console.log("Account ID", accountData.id);
-
-        //* Fetch income transactions
-        const { data: incomeData, error: incomeError } = await supabaseClient
-          .from("transactions")
-          .select("*")
-          .eq("income_expenses", "income")
-          .eq("account_id", accountData.id);
-
-        if (incomeError) {
-          console.error("Error fetching income transactions:", incomeError);
-          setTotalIncome(0);
-        } else if (incomeData) {
-          setTransactions((prev) => [...prev, ...incomeData]);
-
-          const incomeTotal = incomeData.reduce(
-            (sum, transaction) => sum + (transaction.amount || 0),
-            0
-          );
-          setTotalIncome(incomeTotal);
-        }
-
-        //* Fetch expense transactions
-        const { data: expenseData, error: expenseError } = await supabaseClient
-          .from("transactions")
-          .select("*")
-          .eq("income_expenses", "expense")
-          .eq("account_id", accountData.id);
-
-        if (expenseError) {
-          console.error("Error fetching expense transactions:", expenseError);
-          setTotalExpenses(0);
-        } else if (expenseData) {
-          setTransactions((prev) => [...prev, ...expenseData]);
-
-          const expenseTotal = expenseData.reduce(
-            (sum, transaction) => sum + (transaction.amount || 0),
-            0
-          );
-          setTotalExpenses(expenseTotal);
-        }
-      };
-
-      fetchTransactions();
-      setLoading(false);
     };
 
     fetchSessionAndProfile();
   }, []);
+
+  //*
+  useEffect(() => {
+    fetchTransactions();
+  }, [account]);
 
   return (
     <UserContext.Provider
@@ -145,6 +150,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         transactions,
         setTransactions,
         loading,
+        fetchTransactions,
       }}>
       {children}
     </UserContext.Provider>

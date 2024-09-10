@@ -82,6 +82,9 @@ const Income = () => {
         .from("transactions")
         .insert([incomeData]);
 
+      //* refetch transactions after new transaction was inserted to db
+      userContext.fetchTransactions();
+
       console.log(incomeData);
       console.log("Income added successfully to transaction table.");
 
@@ -121,6 +124,11 @@ const Income = () => {
         amount: expenseToAmount.amount,
         profile_id: userContext.profile?.id ?? "",
       });
+
+      console.log("Income1:", userContext.totalIncome);
+      userContext.setTotalIncome(userContext.totalIncome ?? 0 + amount);
+
+      console.log("Income2:", userContext.totalIncome);
 
       // Danach wieder alles leeren
       setName("");

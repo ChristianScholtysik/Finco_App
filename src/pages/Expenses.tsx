@@ -76,6 +76,9 @@ const Expenses = () => {
         .from("transactions")
         .insert([expenseData]);
 
+      //* refetch transactions after new transaction was inserted to db
+      userContext.fetchTransactions();
+
       if (error) {
         console.error("Error inserting data:", error);
         setErrorMessage("Failed to add expense. Please try again.");
