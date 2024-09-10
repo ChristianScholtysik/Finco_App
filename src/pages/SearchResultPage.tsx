@@ -109,7 +109,7 @@ const SearchResultPage: React.FC = () => {
         <div className="flex justify-between items-center mb-10 w-full">
           <Logo />
           {userContext?.profile?.avatar_url ? (
-            <Link to="profile">
+            <Link to="/profile">
               <img
                 alt="User Avatar"
                 src={userContext.profile.avatar_url}
