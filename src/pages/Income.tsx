@@ -83,7 +83,7 @@ const Income = () => {
         .from("transactions")
         .insert([incomeData]);
 
-      userContext.fetchTransactions();
+      // userContext.fetchTransactions();
 
       console.log(incomeData);
       console.log("Income added successfully to transaction table.");
@@ -124,7 +124,7 @@ const Income = () => {
         profile_id: userContext.profile?.id ?? "",
       });
 
-      userContext.setTotalIncome(userContext.totalIncome ?? 0 + amount);
+      // userContext.setTotalIncome(userContext.totalIncome ?? 0 + amount);
 
       setName("");
       setSuccessMessage("Income added successfully!");

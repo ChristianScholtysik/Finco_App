@@ -10,10 +10,13 @@ import supabaseClient from "../lib/supabaseClient";
 import { useUserContext } from "../context/UserContext";
 
 import { Link } from "react-router-dom";
+import { useTransactionContext } from "../context/TotalIncomeContext";
 
 const Transaction = () => {
   const userContext = useUserContext();
   const accountId = userContext?.account?.id || "";
+  const incomeExpenses = useTransactionContext();
+  console.log(incomeExpenses);
 
   const [transactions, setTransactions] = useState<Transactions[]>([]);
   const [groupedTransactions, setGroupedTransactions] = useState<{
@@ -108,14 +111,22 @@ const Transaction = () => {
     fetchExpenseTransactions();
   }, []);
 
+  // console.log("Income", income);
+  // console.log("Expenses:", expenses);
+  // console.log(userContext.totalIncome);
+  // console.log(userContext.totalExpenses);
+
+  // const incomeFieldText = userContext.totalIncome?.toFixed(2) ?? "0.00";
+
+  // const expenseFieldText = userContext.totalExpenses?.toFixed(2) ?? "0.00";
   console.log("Income", income);
   console.log("Expenses:", expenses);
-  console.log(userContext.totalIncome);
-  console.log(userContext.totalExpenses);
+  console.log(incomeExpenses.totalIncome);
+  console.log(incomeExpenses.totalExpenses);
 
-  const incomeFieldText = userContext.totalIncome?.toFixed(2) ?? "0.00";
+  const incomeFieldText = incomeExpenses.totalIncome?.toFixed(2) ?? "0.00";
 
-  const expenseFieldText = userContext.totalExpenses?.toFixed(2) ?? "0.00";
+  const expenseFieldText = incomeExpenses.totalExpenses?.toFixed(2) ?? "0.00";
 
   const formattedIncomeFieldText = new Intl.NumberFormat("en-GB", {
     style: "currency",

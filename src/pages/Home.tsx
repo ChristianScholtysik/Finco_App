@@ -6,6 +6,7 @@ import CreditCard from "../components/CreditCard";
 import ExpenseFieldXL from "../components/ExpenseFieldXL";
 import IncomeFieldXL from "../components/IncomeFieldXL";
 import TotalWalletField from "../components/TotalWalletField";
+import { useTransactionContext } from "../context/TotalIncomeContext";
 
 const Home: React.FC = () => {
   const userContext = useUserContext();
@@ -16,10 +17,13 @@ const Home: React.FC = () => {
     setShowDetails(!showDetails);
   };
 
-  const totalIncome = userContext.totalIncome?.toFixed(2) ?? "0.00";
+  // const totalIncome = userContext.totalIncome?.toFixed(2) ?? "0.00";
 
-  console.log(totalIncome);
-  const expenseFieldText = userContext.totalExpenses?.toFixed(2) ?? "0.00";
+  // console.log(totalIncome);
+  // const expenseFieldText = userContext.totalExpenses?.toFixed(2) ?? "0.00";
+  const incomeExpenses = useTransactionContext();
+  const incomeFieldText = incomeExpenses.totalIncome?.toFixed(2) ?? "0.00";
+  const expenseFieldText = incomeExpenses.totalExpenses?.toFixed(2) ?? "0.00";
 
   return (
     <div className="flex items-center justify-center flex-col h-full">
@@ -62,7 +66,7 @@ const Home: React.FC = () => {
               ? "translate-y-0 opacity-100"
               : "-translate-y-10 opacity-0"
           } flex gap-2 mt-6 mb-12`}>
-          <IncomeFieldXL text={totalIncome} />
+          <IncomeFieldXL text={incomeFieldText} />
           <ExpenseFieldXL text={expenseFieldText} />
         </div>
       </section>
