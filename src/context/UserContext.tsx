@@ -1,7 +1,7 @@
 import { User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
-import { IAccount, IProfile } from "../types/supabase-types.own";
+import { IAccount, IProfile, Transactions } from "../types/supabase-types.own";
 
 interface IUserContext {
   user: User | null;
@@ -10,6 +10,12 @@ interface IUserContext {
   setAccount: React.Dispatch<React.SetStateAction<IAccount | null>>;
   profile: IProfile | null;
   setProfile: React.Dispatch<React.SetStateAction<IProfile | null>>;
+  totalIncome: number | null;
+  setTotalIncome: React.Dispatch<React.SetStateAction<number | null>>;
+  totalExpenses: number | null;
+  setTotalExpenses: React.Dispatch<React.SetStateAction<number | null>>;
+  transactions: Transactions[];
+  setTransactions: React.Dispatch<React.SetStateAction<Transactions[]>>;
   loading: boolean;
 }
 
@@ -20,6 +26,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [account, setAccount] = useState<IAccount | null>(null);
   const [profile, setProfile] = useState<IProfile | null>(null);
+  const [totalIncome, setTotalIncome] = useState<number | null>(null);
+  const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
+  const [transactions, setTransactions] = useState<Transactions[]>([]);
 
   useEffect(() => {
     const fetchSessionAndProfile = async () => {
@@ -65,6 +74,55 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       setAccount(accountData);
+
+      //* Fetch transactions for income and expenses
+      const fetchTransactions = async () => {
+        if (!accountData.id) return;
+
+        console.log("Account ID", accountData.id);
+
+        //* Fetch income transactions
+        const { data: incomeData, error: incomeError } = await supabaseClient
+          .from("transactions")
+          .select("*")
+          .eq("income_expenses", "income")
+          .eq("account_id", accountData.id);
+
+        if (incomeError) {
+          console.error("Error fetching income transactions:", incomeError);
+          setTotalIncome(0);
+        } else if (incomeData) {
+          setTransactions((prev) => [...prev, ...incomeData]);
+
+          const incomeTotal = incomeData.reduce(
+            (sum, transaction) => sum + (transaction.amount || 0),
+            0
+          );
+          setTotalIncome(incomeTotal);
+        }
+
+        //* Fetch expense transactions
+        const { data: expenseData, error: expenseError } = await supabaseClient
+          .from("transactions")
+          .select("*")
+          .eq("income_expenses", "expense")
+          .eq("account_id", accountData.id);
+
+        if (expenseError) {
+          console.error("Error fetching expense transactions:", expenseError);
+          setTotalExpenses(0);
+        } else if (expenseData) {
+          setTransactions((prev) => [...prev, ...expenseData]);
+
+          const expenseTotal = expenseData.reduce(
+            (sum, transaction) => sum + (transaction.amount || 0),
+            0
+          );
+          setTotalExpenses(expenseTotal);
+        }
+      };
+
+      fetchTransactions();
       setLoading(false);
     };
 
@@ -80,6 +138,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setAccount,
         setUser,
         setProfile,
+        totalIncome,
+        setTotalIncome,
+        totalExpenses,
+        setTotalExpenses,
+        transactions,
+        setTransactions,
         loading,
       }}>
       {children}

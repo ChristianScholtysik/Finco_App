@@ -114,7 +114,7 @@ const Income = () => {
         setErrorMessage("Failed to add expense. Please try again.");
         return;
       }
-
+      //*
       userContext.setAccount({
         id: "",
         created_at: "",

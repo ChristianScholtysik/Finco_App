@@ -1,22 +1,17 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useUserContext } from "../context/UserContext";
 import CreditCard from "../components/CreditCard";
 import ExpenseFieldXL from "../components/ExpenseFieldXL";
 import IncomeFieldXL from "../components/IncomeFieldXL";
 import TotalWalletField from "../components/TotalWalletField";
-import { useTransactionContext } from "../context/TotalIncomeContext";
-import supabaseClient from "../lib/supabaseClient";
 
 const Home: React.FC = () => {
-  const location = useLocation();
   const userContext = useUserContext();
-  const user = userContext?.user;
 
-  const incomeExpenses = useTransactionContext();
-  const incomeFieldText = incomeExpenses.totalIncome?.toFixed(2) ?? "0.00";
-  const expenseFieldText = incomeExpenses.totalExpenses?.toFixed(2) ?? "0.00";
+  const incomeFieldText = userContext.totalIncome?.toFixed(2) ?? "0.00";
+  const expenseFieldText = userContext.totalExpenses?.toFixed(2) ?? "0.00";
 
   const [showDetails, setShowDetails] = useState(false);
 
@@ -24,37 +19,37 @@ const Home: React.FC = () => {
     setShowDetails(!showDetails);
   };
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      if (!user) return;
+  // useEffect(() => {
+  //   const fetchProfileData = async () => {
+  //     if (!user) return;
 
-      const profileResponse = await supabaseClient
-        .from("profiles")
-        .select(
-          "id, card_number, first_name, last_name, avatar_url, created_at"
-        )
-        .eq("id", user?.id)
-        .single();
+  //     const profileResponse = await supabaseClient
+  //       .from("profiles")
+  //       .select(
+  //         "id, card_number, first_name, last_name, avatar_url, created_at"
+  //       )
+  //       .eq("id", user?.id)
+  //       .single();
 
-      if (profileResponse.error) {
-        console.error("Error fetching profile data:", profileResponse.error);
-      } else {
-        const profileData = profileResponse.data;
+  //     if (profileResponse.error) {
+  //       console.error("Error fetching profile data:", profileResponse.error);
+  //     } else {
+  //       const profileData = profileResponse.data;
 
-        const formattedProfile = {
-          ...profileData,
-          created_at: profileData.created_at,
-        };
+  //       const formattedProfile = {
+  //         ...profileData,
+  //         created_at: profileData.created_at,
+  //       };
 
-        userContext.setProfile(formattedProfile);
-      }
-    };
+  //       userContext.setProfile(formattedProfile);
+  //     }
+  //   };
 
-    fetchProfileData();
-  }, [location, user]);
-  if (!userContext.profile) {
-    return <p>Loading...</p>;
-  }
+  //   fetchProfileData();
+  // }, [location, user, account]);
+  // if (!userContext.profile) {
+  //   return <p>Loading...</p>;
+  // }
 
   return (
     <div className="flex items-center justify-center flex-col h-full">
@@ -63,7 +58,7 @@ const Home: React.FC = () => {
           <div>
             <h2 className="font-Urbanist text-sm">Welcome back</h2>
             <p className="font-Urbanist text-lg">
-              {userContext.profile.first_name} {userContext.profile.last_name}
+              {userContext.profile?.first_name} {userContext.profile?.last_name}
             </p>
           </div>
 

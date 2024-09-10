@@ -8,14 +8,12 @@ import { Transactions } from "../types/supabase-types.own";
 import { useEffect, useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
 import { useUserContext } from "../context/UserContext";
-import { useTransactionContext } from "../context/TotalIncomeContext";
+
 import { Link } from "react-router-dom";
 
 const Transaction = () => {
   const userContext = useUserContext();
   const accountId = userContext?.account?.id || "";
-  const incomeExpenses = useTransactionContext();
-  console.log(incomeExpenses);
 
   const [transactions, setTransactions] = useState<Transactions[]>([]);
   const [groupedTransactions, setGroupedTransactions] = useState<{
@@ -116,12 +114,12 @@ const Transaction = () => {
 
   console.log("Income", income);
   console.log("Expenses:", expenses);
-  console.log(incomeExpenses.totalIncome);
-  console.log(incomeExpenses.totalExpenses);
+  console.log(userContext.totalIncome);
+  console.log(userContext.totalExpenses);
 
-  const incomeFieldText = incomeExpenses.totalIncome?.toFixed(2) ?? "0.00";
+  const incomeFieldText = userContext.totalIncome?.toFixed(2) ?? "0.00";
 
-  const expenseFieldText = incomeExpenses.totalExpenses?.toFixed(2) ?? "0.00";
+  const expenseFieldText = userContext.totalExpenses?.toFixed(2) ?? "0.00";
 
   const formattedIncomeFieldText = new Intl.NumberFormat("en-GB", {
     style: "currency",
