@@ -14,6 +14,7 @@ const SearchResultPage: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Transactions[]>([]);
   const [searchInitiated, setSearchInitiated] = useState<boolean>(false); //
   const userContext = useUserContext();
+  const accountId = userContext?.account?.id || "";
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -56,6 +57,7 @@ const SearchResultPage: React.FC = () => {
     const { data, error } = await supabaseClient
       .from("transactions")
       .select("*")
+      .eq("account_id", accountId)
       .ilike("name", `${term}%`);
 
     if (error) {
@@ -78,6 +80,7 @@ const SearchResultPage: React.FC = () => {
     const { data, error } = await supabaseClient
       .from("transactions")
       .select("*")
+      .eq("account_id", accountId)
       .eq("category", category);
 
     if (error) {

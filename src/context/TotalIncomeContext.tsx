@@ -1,81 +1,3 @@
-// import { createContext, useContext, useEffect, useState } from "react";
-// import supabaseClient from "../lib/supabaseClient";
-// import { IncomeExpenses, Transactions } from "../types/supabase-types.own";
-
-// interface ITransaction {
-//   totalIncome: number | null;
-//   setTotalIncome: React.Dispatch<React.SetStateAction<number | null>>;
-//   //   totalExpenses: Transactions | null;
-//   //   setTotalExpenses: React.Dispatch<React.SetStateAction<Transactions | null>>;
-// }
-
-// const IncomeExpensesContext = createContext<ITransaction | null>(null);
-
-// export const TransactionProvider = ({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) => {
-//   const [totalIncome, setTotalIncome] = useState<Transactions | null>(null);
-//   //   const [totalExpenses, setTotalExpenses] = useState<Transactions>(null);
-
-//   const [transactions, setTransactions] = useState<Transactions[]>([]);
-
-//   //   useEffect(() => {
-//   //     const fetchAllTransactions = async () => {
-//   //       const { data, error } = await supabaseClient
-//   //         .from("transactions")
-//   //         .select("*");
-//   //       if (error) {
-//   //         console.error(error);
-//   //         setTransactions([]);
-//   //       } else {
-//   //         setTransactions(data);
-//   //       }
-//   //     };
-
-//   //     fetchAllTransactions();
-//   //   }, []);
-
-//   useEffect(() => {
-//     const fetchIncomeTransactions = async () => {
-//       const { data, error } = await supabaseClient
-//         .from("transactions")
-//         .select("*")
-//         .eq("income_expenses", "income");
-
-//       if (error) {
-//         console.error(error);
-//         setTotalIncome([]);
-//       } else {
-//         setTotalIncome(data);
-//       }
-//     };
-
-//     fetchIncomeTransactions();
-//   }, []);
-
-//   const totalIncomeResult = transactions.reduce((sum, transaction) => {
-//     return sum + (transaction.amount || 0);
-//   }, 0);
-
-//   setTotalIncome(totalIncomeResult);
-
-//   return (
-//     <IncomeExpensesContext.Provider value={{ totalIncome, setTotalIncome }}>
-//       {children}
-//     </IncomeExpensesContext.Provider>
-//   );
-// };
-
-// export const useUserContext = () => {
-//   const context = useContext(IncomeExpensesContext);
-//   if (!context) {
-//     throw new Error("useUserContext must be used within a UserProvider");
-//   }
-//   return context;
-// };
-
 import { createContext, useContext, useEffect, useState } from "react";
 import supabaseClient from "../lib/supabaseClient";
 import { Transactions } from "../types/supabase-types.own";
@@ -102,9 +24,12 @@ export const TransactionProvider = ({
   const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
   const userContext = useUserContext();
   const accountId = userContext?.account?.id || "";
+  console.log("Account Id im Context", accountId);
 
   useEffect(() => {
     const fetchIncomeTransactions = async () => {
+      console.log("Account ID:", accountId);
+
       const { data, error } = await supabaseClient
         .from("transactions")
         .select("*")
@@ -122,11 +47,12 @@ export const TransactionProvider = ({
           0
         );
         setTotalIncome(total);
+        console.log("TotalIncome", total);
       }
     };
 
     fetchIncomeTransactions();
-  }, []);
+  }, [accountId]);
 
   useEffect(() => {
     const fetchExpensesTransactions = async () => {
@@ -151,7 +77,7 @@ export const TransactionProvider = ({
     };
 
     fetchExpensesTransactions();
-  }, []);
+  }, [accountId]);
 
   return (
     <IncomeExpensesContext.Provider

@@ -13,8 +13,9 @@ import { Link } from "react-router-dom";
 
 const Transaction = () => {
   const userContext = useUserContext();
-
+  const accountId = userContext?.account?.id || "";
   const incomeExpenses = useTransactionContext();
+  console.log(incomeExpenses);
 
   const [transactions, setTransactions] = useState<Transactions[]>([]);
   const [groupedTransactions, setGroupedTransactions] = useState<{
@@ -22,13 +23,16 @@ const Transaction = () => {
   }>({});
 
   const [income, setIncome] = useState<Transactions[]>([]);
+
   const [expenses, setExpenses] = useState<Transactions[]>([]);
 
   useEffect(() => {
     const fetchAllTransactions = async () => {
       const { data, error } = await supabaseClient
         .from("transactions")
-        .select("*");
+        .select("*")
+        .eq("account_id", accountId);
+
       if (error) {
         console.error(error);
         setTransactions([]);
@@ -73,6 +77,7 @@ const Transaction = () => {
       const { data, error } = await supabaseClient
         .from("transactions")
         .select("*")
+        .eq("account_id", accountId)
         .eq("income_expenses", "income");
 
       if (error) {
@@ -95,7 +100,8 @@ const Transaction = () => {
       const { data, error } = await supabaseClient
         .from("transactions")
         .select("*")
-        .eq("income_expenses", "expense");
+        .eq("income_expenses", "expense")
+        .eq("account_id", accountId);
 
       if (error) {
         console.error(error);
@@ -108,12 +114,10 @@ const Transaction = () => {
     fetchExpenseTransactions();
   }, []);
 
-  // const totalExpenses = expenses.reduce((total, expense) => {
-  //   return total + expense.amount;
-  // }, 0);
-
   console.log("Income", income);
   console.log("Expenses:", expenses);
+  console.log(incomeExpenses.totalIncome);
+  console.log(incomeExpenses.totalExpenses);
 
   const incomeFieldText = incomeExpenses.totalIncome?.toFixed(2) ?? "0.00";
 
