@@ -1,13 +1,13 @@
 # Finco - Your Ultimate Finance App
 
-![Finco Screenshot 1](assets/images/Finco.png)  
-
+![Finco Screenshot 1](/screenshots readme/Home.jpeg)
+![Finco Screenshot 2](/screenshots readme/report.jpeg)
 
 ## About Finco
 
 **Finco** is the ultimate finance app that helps you manage your finances with ease and clarity. Organize your income and expenses into custom categories and always keep an overview of your financial situation. With Finco, you'll always know exactly how much money you're spending and what you're spending it on. Say goodbye to chaotic finances and start your journey to financial freedom with Finco!
 
-**[Visit the Website](https://finco-app.netlify.app/)** 
+**[Visit the Website](https://finco-app.netlify.app/)**
 
 ## 🚀 Features
 
@@ -35,20 +35,22 @@ To install and run the app locally, follow these steps:
    git clone https://github.com/yourUsername/finco.git
    cd finco
 
-  
+   ```
+
 2. **Install dependencies**:
 
    ```bash
    npm install
 
+   ```
 
 3. **Start the Development Server**:
 
    ```bash
    npm run dev
+   ```
 
-  It will open in your default web browser at http://localhost:3000. 
-
+It will open in your default web browser at http://localhost:3000.
 
 ## 🚦 Usage
 
@@ -61,7 +63,6 @@ Once the development server is up and running, you can explore the app using you
 - **Report Page**: Visualizes income and expenses through various reports and charts. This helps users understand their financial patterns and make better financial decisions.
 
 - **Profile Page**: Allows users to edit their profile, add new accounts, and manage credit cards. This page provides a personalized experience and control over the app's settings.
-  
 
 ## 📁 App Structure
 
@@ -81,5 +82,3 @@ This project was a collaborative effort involving three team members, each bring
 - [**Anna Laube**](https://github.com/shakedown3000): UI/UX design implementation (Report) as well as functionality (Reports and Charts) and state management, crafting the visual elements (Charts, Icons) of the app and working closely on the CSS styling with Tailwind CSS.
 
 - [**Julian Scheib**](https://github.com/JulianScheib): UI/UX design implementation (HomePage) as well as functionality (Search, Income and Expense) and state management, crafting the visual elements of the app (Buttons, CreditCard) and working closely on the CSS styling with Tailwind CSS.
-
-
