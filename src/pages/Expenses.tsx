@@ -59,7 +59,6 @@ const Expenses = () => {
     }
 
     try {
-      // const formattedAmount = parseFloat(amount.toFixed(2)) * -1;
       const formattedAmount = parseFloat(amount.toFixed(2)) * 1;
 
       const expenseData: TablesInsert<"transactions"> = {
@@ -71,7 +70,6 @@ const Expenses = () => {
         account_id: accountId,
       };
 
-      // const { data, error } = await supabaseClient
       const { error } = await supabaseClient
         .from("transactions")
         .insert([expenseData]);
@@ -134,9 +132,7 @@ const Expenses = () => {
       <div className="bg-white p-8 rounded-lg w-full max-w-sm">
         <div className="mb-6">
           <Link to="/">
-            <button
-              // onClick={() => navigate(-1)}
-              className="text-black hover:text-gray font-medium">
+            <button className="text-black hover:text-gray font-medium">
               &larr;
             </button>
           </Link>

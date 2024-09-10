@@ -89,10 +89,6 @@ const Transaction = () => {
     fetchIncomeTransactions();
   }, []);
 
-  // const totalIncome = transactions.reduce((sum, transaction) => {
-  //   return sum + (transaction.amount || 0);
-  // }, 0);
-
   useEffect(() => {
     const fetchExpenseTransactions = async () => {
       const { data, error } = await supabaseClient
@@ -181,7 +177,6 @@ const Transaction = () => {
                   </div>
                   <div>
                     <div className="font-semibold text-tBase w-40 text-base">
-                      {/* {transaction.category} */}
                       {transaction.name}
                     </div>
                     <div className="text-small text-tBase">
@@ -204,7 +199,6 @@ const Transaction = () => {
                       style: "currency",
                       currency: "EUR",
                     }).format(Number(transaction.amount))}
-                    {/* {Math.abs(transaction.amount).toFixed(2)} € */}
                   </div>
                 </div>
               ))}

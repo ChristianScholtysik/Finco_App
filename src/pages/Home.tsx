@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useUserContext } from "../context/UserContext";
@@ -20,38 +20,6 @@ const Home: React.FC = () => {
 
   console.log(totalIncome);
   const expenseFieldText = userContext.totalExpenses?.toFixed(2) ?? "0.00";
-
-  // useEffect(() => {
-  //   const fetchProfileData = async () => {
-  //     if (!user) return;
-
-  //     const profileResponse = await supabaseClient
-  //       .from("profiles")
-  //       .select(
-  //         "id, card_number, first_name, last_name, avatar_url, created_at"
-  //       )
-  //       .eq("id", user?.id)
-  //       .single();
-
-  //     if (profileResponse.error) {
-  //       console.error("Error fetching profile data:", profileResponse.error);
-  //     } else {
-  //       const profileData = profileResponse.data;
-
-  //       const formattedProfile = {
-  //         ...profileData,
-  //         created_at: profileData.created_at,
-  //       };
-
-  //       userContext.setProfile(formattedProfile);
-  //     }
-  //   };
-
-  //   fetchProfileData();
-  // }, [location, user, account]);
-  // if (!userContext.profile) {
-  //   return <p>Loading...</p>;
-  // }
 
   return (
     <div className="flex items-center justify-center flex-col h-full">

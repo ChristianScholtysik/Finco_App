@@ -16,7 +16,7 @@ const Profile = () => {
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(
     userContext?.profile?.avatar_url || null
-  ); // Initialize with current avatar URL
+  );
   const [uploading, setUploading] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
 

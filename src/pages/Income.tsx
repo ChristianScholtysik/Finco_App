@@ -77,7 +77,7 @@ const Income = () => {
       };
 
       // Insert Befehl an Supabase
-      // const { data, error } = await supabaseClient
+
       const { error } = await supabaseClient
         .from("transactions")
         .insert([incomeData]);
@@ -149,18 +149,12 @@ const Income = () => {
       <div className="bg-white p-8 rounded-lg w-full max-w-sm">
         <div className="mb-6">
           <Link to="/">
-            <button
-              // onClick={() => navigate(-1)}
-
-              className="text-black hover:text-gray font-medium">
+            <button className="text-black hover:text-gray font-medium">
               &larr;
             </button>
           </Link>
         </div>
         <h1 className="text-2xl text-income font-bold mb-6">Add Income</h1>
-        {/* <div className="mb-4 ">
-          <CreditCard />
-        </div> */}
 
         <form onSubmit={addIncome}>
           {/* Name */}
