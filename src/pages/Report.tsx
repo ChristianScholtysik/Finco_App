@@ -146,7 +146,11 @@ const Report: React.FC = () => {
         }
         if (data) {
           console.log("Daten da");
-          const monthlyDataTemp = Array(12).fill({ income: 0, expenses: 0 });
+          // const monthlyDataTemp = Array(12).fill({ income: 0, expenses: 0 });
+          const monthlyDataTemp = Array.from({ length: 12 }, () => ({
+            income: 0,
+            expenses: 0,
+          }));
 
           // Aggregation der Daten pro Monat
           data.forEach((transaction: any) => {
@@ -187,13 +191,13 @@ const Report: React.FC = () => {
       {
         label: "Income",
         data: monthlyDataYear.map((month) => month.income),
-        backgroundColor: "#FF9900",
+        backgroundColor: "#1e78fe",
         borderWidth: 0,
       },
       {
         label: "Expense",
         data: monthlyDataYear.map((month) => month.expenses),
-        backgroundColor: "#1e78fe",
+        backgroundColor: "#FF9900",
         borderWidth: 0,
       },
     ],
@@ -442,9 +446,11 @@ const Report: React.FC = () => {
               />
             </Link>
           ) : (
-            <div className="h-full w-auto aspect-square rounded-full bg-gray-300 flex items-center justify-center">
-              No image
-            </div>
+            <Link to="profile">
+              <div className=" h-14 w-14 rounded-full bg-stone-300 flex items-center text-xs text-center text-tBase">
+                Add image
+              </div>
+            </Link>
           )}
         </div>
 

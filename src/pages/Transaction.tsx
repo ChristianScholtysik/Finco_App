@@ -147,9 +147,11 @@ const Transaction = () => {
               />
             </Link>
           ) : (
-            <div className="inline-block h-14 w-14 rounded-full bg-gray-300 flex items-center justify-center">
-              No image
-            </div>
+            <Link to="profile">
+              <div className=" h-14 w-14 rounded-full bg-stone-300 flex items-center text-xs text-center text-tBase">
+                Add image
+              </div>
+            </Link>
           )}
         </div>
         <div className="flex justify-between items-center gap-16 mb-8 w-full max-w-sm">

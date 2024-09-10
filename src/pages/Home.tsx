@@ -76,14 +76,18 @@ const Home: React.FC = () => {
               />
             </Link>
           ) : (
-            <div className="inline-block h-14 w-14 rounded-full bg-gray-300 flex items-center justify-center">
-              No image
-            </div>
+            <Link to="profile">
+              <div className=" h-14 w-14 rounded-full bg-stone-300 flex items-center text-xs text-center text-tBase">
+                Add image
+              </div>
+            </Link>
           )}
         </div>
 
         <CreditCard />
-        <p className="font-Urbanist text-lg mb-8 mt-7">Total wallet</p>
+        <p className="font-Urbanist text-lg mb-8 mt-7 text-tBase">
+          Total wallet
+        </p>
 
         <TotalWalletField onToggle={toggleDetails} />
 

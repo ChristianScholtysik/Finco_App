@@ -48,9 +48,11 @@ const MyWallet = () => {
                 />
               </Link>
             ) : (
-              <div className="inline-block h-14 w-14 rounded-full bg-gray-300 flex items-center justify-center">
-                No image
-              </div>
+              <Link to="profile">
+                <div className=" h-14 w-14 rounded-full bg-stone-300 flex items-center text-xs text-center text-tBase">
+                  Add image
+                </div>
+              </Link>
             )}
           </div>
           <div className="flex justify-between items-center gap-16 mb-8 w-full max-w-sm">
@@ -61,23 +63,26 @@ const MyWallet = () => {
             className={`w-full max-w-lg mt-6 mb-6  ${
               balance >= 0 ? "bg-custom-gradient" : "bg-another-gradient"
             } text-white rounded-lg shadow-md py-4 px-10 relative`}>
-            {/* <div className="absolute top-4 right-3 text-sm text-gray-700">
-              {currentDate}
-            </div> */}
-
             <div className="flex justify-center items-center mb-6 px-4">
               <div className="flex flex-col">
-                <p className="text-normal mt-4 font-semibold mb-2 ">
-                  There are currently
+                <p className="text-normal mt-4 font-semibold mb-2">
+                  <span>Hey </span>
+                  <span
+                    style={{
+                      color: balance >= 0 ? "#ffaa1a" : "#298bff", // Adjust colors based on your gradient themes
+                    }}>
+                    {userContext.profile?.first_name}
+                  </span>
+                  , there are
                 </p>
-                <div className="flex items-center flex-col">
-                  <p className="text-xxl font-bold mb-1 text-white">
+                <div className="flex items-end flex-col">
+                  <p className="text-superxl font-bold mb-1 text-white ">
                     {formattedText}
                   </p>
-                  <p className="text-normal mt-4 font-semibold mb-2 ">
-                    in your wallet!
-                  </p>
                 </div>
+                <p className="text-normal mt-4 font-semibold mb-2 flex justify-end">
+                  in your wallet!
+                </p>
               </div>
             </div>
           </div>

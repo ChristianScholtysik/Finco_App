@@ -35,6 +35,7 @@ export default {
         xl: "2rem",
         xlarge: "1.7rem",
         xxl: "2.2rem",
+        superxl: "3.0rem",
         medium: "1.2rem",
       },
       borderRadius: {
