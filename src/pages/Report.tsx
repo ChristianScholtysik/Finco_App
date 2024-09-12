@@ -438,7 +438,7 @@ const Report: React.FC = () => {
         <div className="flex justify-between items-center mb-10 w-full h-10">
           <Logo />
           {userContext.profile?.avatar_url ? (
-            <Link to="profile">
+            <Link to="/profile">
               <img
                 alt="User Avatar"
                 src={userContext.profile.avatar_url}
@@ -446,7 +446,7 @@ const Report: React.FC = () => {
               />
             </Link>
           ) : (
-            <Link to="profile">
+            <Link to="/profile">
               <div className=" h-14 w-14 rounded-full bg-stone-300 flex items-center text-xs text-center text-tBase">
                 Add image
               </div>

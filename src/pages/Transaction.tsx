@@ -111,14 +111,6 @@ const Transaction = () => {
     fetchExpenseTransactions();
   }, []);
 
-  // console.log("Income", income);
-  // console.log("Expenses:", expenses);
-  // console.log(userContext.totalIncome);
-  // console.log(userContext.totalExpenses);
-
-  // const incomeFieldText = userContext.totalIncome?.toFixed(2) ?? "0.00";
-
-  // const expenseFieldText = userContext.totalExpenses?.toFixed(2) ?? "0.00";
   console.log("Income", income);
   console.log("Expenses:", expenses);
   console.log(incomeExpenses.totalIncome);
@@ -144,7 +136,7 @@ const Transaction = () => {
         <div className="flex justify-between items-center mb-10 w-full">
           <Logo />
           {userContext?.profile?.avatar_url ? (
-            <Link to="profile">
+            <Link to="/profile">
               <img
                 alt="User Avatar"
                 src={userContext.profile.avatar_url}
@@ -152,7 +144,7 @@ const Transaction = () => {
               />
             </Link>
           ) : (
-            <Link to="profile">
+            <Link to="/profile">
               <div className=" h-14 w-14 rounded-full bg-stone-300 flex items-center text-xs text-center text-tBase">
                 Add image
               </div>

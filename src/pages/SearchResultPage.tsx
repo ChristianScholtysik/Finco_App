@@ -14,7 +14,6 @@ const SearchResultPage: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Transactions[]>([]);
   const [searchInitiated, setSearchInitiated] = useState<boolean>(false); //
   const userContext = useUserContext();
-  const accountId = userContext?.account?.id || "";
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -57,7 +56,6 @@ const SearchResultPage: React.FC = () => {
     const { data, error } = await supabaseClient
       .from("transactions")
       .select("*")
-      .eq("account_id", accountId)
       .ilike("name", `${term}%`);
 
     if (error) {
@@ -80,7 +78,6 @@ const SearchResultPage: React.FC = () => {
     const { data, error } = await supabaseClient
       .from("transactions")
       .select("*")
-      .eq("account_id", accountId)
       .eq("category", category);
 
     if (error) {
@@ -117,9 +114,11 @@ const SearchResultPage: React.FC = () => {
               />
             </Link>
           ) : (
-            <div className="inline-block h-14 w-14 rounded-full bg-gray-300 flex items-center justify-center">
-              No image
-            </div>
+            <Link to="/profile">
+              <div className=" h-14 w-14 rounded-full bg-stone-300 flex items-center text-xs text-center text-tBase">
+                Add image
+              </div>
+            </Link>
           )}
         </div>
 

@@ -46,7 +46,7 @@ const Expenses = () => {
   }, [user]);
 
   useEffect(() => {
-    // Set the initial date to today's date
+    //* Set the initial date to today's date
     const today = new Date().toISOString().split("T")[0];
     setDate(today);
   }, []);
@@ -65,6 +65,7 @@ const Expenses = () => {
     }
 
     try {
+      // const formattedAmount = parseFloat(amount.toFixed(2)) * -1;
       const formattedAmount = parseFloat(amount.toFixed(2)) * 1;
 
       const expenseData: TablesInsert<"transactions"> = {
@@ -76,12 +77,10 @@ const Expenses = () => {
         account_id: accountId,
       };
 
+      // const { data, error } = await supabaseClient
       const { error } = await supabaseClient
         .from("transactions")
         .insert([expenseData]);
-
-      //* refetch transactions after new transaction was inserted to db
-      // userContext.fetchTransactions();
 
       if (error) {
         console.error("Error inserting data:", error);
@@ -103,12 +102,13 @@ const Expenses = () => {
 
       const amountResponse = await supabaseClient
         .from("account")
+
         .update(expenseToAmount)
         .eq("profile_id", profileId);
 
       if (amountResponse.error) {
         console.error("Error inserting data:", error);
-        setErrorMessage("Failed to update account. Please try again.");
+        setErrorMessage("Failed to add expense. Please try again.");
         return;
       }
 
@@ -137,7 +137,9 @@ const Expenses = () => {
       <div className="bg-white p-8 rounded-lg w-full max-w-sm">
         <div className="mb-6">
           <Link to="/">
-            <button className="text-black hover:text-gray font-medium">
+            <button
+              // onClick={() => navigate(-1)}
+              className="text-black hover:text-gray font-medium">
               &larr;
             </button>
           </Link>

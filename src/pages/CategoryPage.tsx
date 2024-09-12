@@ -16,7 +16,6 @@ const CategoryPage: React.FC = () => {
   }>({});
 
   const userContext = useUserContext();
-  const accountId = userContext?.account?.id || "";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +25,6 @@ const CategoryPage: React.FC = () => {
         const { data, error } = await supabaseClient
           .from("transactions")
           .select("*")
-          .eq("account_id", accountId)
           .eq("category", category);
 
         if (error) {
@@ -76,15 +74,15 @@ const CategoryPage: React.FC = () => {
           <div className="flex justify-between items-center mb-10 w-full">
             <Logo />
             {userContext?.profile?.avatar_url ? (
-              <Link to="profile">
+              <Link to="/profile">
                 <img
                   alt="User Avatar"
-                  src={userContext?.profile?.avatar_url}
-                  className="inline-block h-14 w-14 rounded-full  cursor-pointer object-cover object-center"
+                  src={userContext.profile.avatar_url}
+                  className="inline-block h-14 w-14 rounded-full cursor-pointer object-cover object-center"
                 />
               </Link>
             ) : (
-              <Link to="profile">
+              <Link to="/profile">
                 <div className=" h-14 w-14 rounded-full bg-stone-300 flex items-center text-xs text-center text-tBase">
                   Add image
                 </div>
@@ -94,7 +92,7 @@ const CategoryPage: React.FC = () => {
 
           <h1 className="font-bold text-2xl mb-4">Category: {category}</h1>
           <button onClick={() => navigate(-1)} className="cursor-pointer mb-4">
-            <IoIosArrowDropleft />
+            &larr;
           </button>
 
           {Object.keys(groupedTransactions).map((date) => (

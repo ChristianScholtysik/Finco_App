@@ -35,6 +35,13 @@ const SignUp = () => {
     const authResponse = await supabaseClient.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+          cardnumber: cardNumber,
+        },
+      },
     });
 
     if (authResponse.error) {
@@ -44,25 +51,7 @@ const SignUp = () => {
     }
 
     if (authResponse.data.user) {
-      const user = authResponse.data.user;
-
-      const { error } = await supabaseClient.from("profiles").insert([
-        {
-          id: user.id,
-          first_name: firstName,
-          last_name: lastName,
-          card_number: Number(cardNumber),
-        },
-      ]);
-
-      if (error) {
-        console.error("Error inserting into profiles", error.message);
-        setErrorMessage(
-          "There was an issue setting up your profile. Please try again."
-        );
-        return;
-      }
-
+      console.log("User registration successful", authResponse.data.user);
       setSuccessMessage(
         "Sign-up successful. Please check your email to confirm your account."
       );
