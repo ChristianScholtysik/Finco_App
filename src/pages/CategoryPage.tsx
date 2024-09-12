@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import Logo from "../components/Logo";
 import supabaseClient from "../lib/supabaseClient";
 import { Transactions } from "../types/supabase-types.own";
-import { IoIosArrowDropleft } from "react-icons/io";
+
 import categoryIcons from "../assets/categoryIcons";
 import { useUserContext } from "../context/UserContext";
 
