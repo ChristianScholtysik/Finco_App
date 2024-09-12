@@ -73,8 +73,15 @@ const LoginForm = () => {
         <h2 className="text-3xl font-semibold text-center mb-4 text-tBase">
           Welcome back
         </h2>
-        <p className="text-center mb-12 mt-4 font-normal text-sm text-tBase p-2">
+        <p className="text-center mb-6 mt-4 font-normal text-sm text-tBase p-2">
           Ready to dive in and take charge of your finances again?
+        </p>
+        <p className="text-center mb-4  font-semibold text-sm text-tBase p-2">
+          For testing purposes, use the following credentials:
+          <ul>
+            <li>Email: johndoe@supercode.de</li>
+            <li> Password: 123</li>
+          </ul>
         </p>
         <div className="mb-4">
           <input
